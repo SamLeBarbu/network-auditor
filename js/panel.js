@@ -42,6 +42,8 @@ filterTypeSelect.addEventListener('change', updateRequestList);
 document.getElementById('clearFilter').addEventListener('click', () => {
     document.getElementById('filter-input').value = '';
     updateRequestList();
+    
+    chrome.storage.sync.set({ filterValue: filterInput.value });
 });
 
 clearListButton.addEventListener('click', () => {
@@ -60,6 +62,7 @@ tagCoButton.addEventListener('click', () => {
     }
     filterInput.value += 'cdn.tagcommander.com';
     updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
 });
 
 pianoButton.addEventListener('click', () => {
@@ -68,6 +71,7 @@ pianoButton.addEventListener('click', () => {
     }
     filterInput.value += 'hit.xiti event?s=';
     updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
 });
 
 csButton.addEventListener('click', () => {
@@ -76,6 +80,7 @@ csButton.addEventListener('click', () => {
     }
     filterInput.value += 'c.contentsquare.net';
     updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
 });
 
 clarityButton.addEventListener('click', () => {
@@ -84,6 +89,8 @@ clarityButton.addEventListener('click', () => {
     }
     filterInput.value += 'n.clarity.ms/collect';
     updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
+
 });
 
 kameleoonButton.addEventListener('click', () => {
@@ -92,6 +99,7 @@ kameleoonButton.addEventListener('click', () => {
     }
     filterInput.value += 'data.kameleoon.eu';
     updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
 });
 
 abtastyButton.addEventListener('click', () => {
@@ -100,6 +108,7 @@ abtastyButton.addEventListener('click', () => {
     }
     filterInput.value += 'try.abtasty.com ariane.abtasty.com';
     updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
 });
 
 bingButton.addEventListener('click', () => {
@@ -108,6 +117,7 @@ bingButton.addEventListener('click', () => {
     }
     filterInput.value += 'bat.bing.com';
     updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
 });
 
 gtmButton.addEventListener('click', () => {
@@ -116,6 +126,7 @@ gtmButton.addEventListener('click', () => {
     }
     filterInput.value += 'www.googletagmanager.com';
     updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
 });
 
 ga4Button.addEventListener('click', () => {
@@ -124,6 +135,7 @@ ga4Button.addEventListener('click', () => {
     }
     filterInput.value += 'google-analytics.com/collect';
     updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
 });
 
 piwikButton.addEventListener('click', () => {
@@ -132,6 +144,7 @@ piwikButton.addEventListener('click', () => {
     }
     filterInput.value += 'ppms.php';
     updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
 });
 
 
@@ -220,3 +233,22 @@ function showRequestDetails(request) {
     requestDetails.innerHTML = details;
     overlay.style.display = 'block';
 }
+
+// Load saved filter value when the panel opens
+chrome.storage.sync.get('filterValue', ({ filterValue }) => {
+    if (filterValue) {
+      filterInput.value = filterValue;
+      updateRequestList();
+    }
+  });
+  
+  // Save updates to storage whenever the user types
+  filterInput.addEventListener('input', () => {
+    chrome.storage.sync.set({ filterValue: filterInput.value });
+  });
+
+  // Save updates to storage whenever the click on buttons
+    tagCoButton.addEventListener('click', () => {
+        chrome.storage.sync.set({ filterValue: filterInput.value });
+    });
+  
