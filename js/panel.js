@@ -26,6 +26,8 @@ const bingButton = document.getElementById('bingButton');
 let networkRequests = [];
 let pageUrls = [];
 
+let isPreview = false;
+
 chrome.devtools.network.onRequestFinished.addListener((request) => {
     networkRequests.push(request);
     updateRequestList();
@@ -256,6 +258,7 @@ function addRequestToTable(request) {
     if (request.request.url.includes("?")) {
         urlToDisplay = (request.request.url.split("?")[0]).split("/").slice(-1);
         urlToDisplay += "?" + request.request.url.split("?")[1];
+        
     } else {
         urlToDisplay = request.request.url.split("/").slice(-1);
     }
@@ -271,6 +274,14 @@ function addRequestToTable(request) {
         <td>${fileType}</td>
     `;
     listItem.addEventListener('click', () => {
+        
+
+        // If url contains cdn.tagcommander.com and .js then isPreview is true
+        if (request.request.url.includes('cdn.tagcommander.com')) {
+            isPreview = true;
+        } else {
+            isPreview = false;
+        }
         showRequestDetails(request);
     });
     requestList.appendChild(listItem);
@@ -287,15 +298,27 @@ function addPageUrlRow(url) {
 }
 
 function showRequestDetails(request) {
-    const queryParameters = request.request.queryString.map(param => `${param.name}: ${param.value}`).join('\n');
-    const requestPayload = request.request.postData ? JSON.stringify(JSON.parse(request.request.postData.text), null, 2) : 'N/A';
-    const details = `
-    <span class="green">URL:</span><br><a href="${request.request.url}" target="_b;ank" class="code"><pre>${request.request.url}</pre></a><br><br>
-    <span class="green">Query Parameters:</span><br><pre>${queryParameters}</pre><br><br>
-    <span class="green">Request Payload:</span><br><pre>${requestPayload}</pre>
-    `;
+  request.getContent((body) => {
+    let details;
+    console.log('isPreview', isPreview);
+    if (isPreview === true) {
+      details = `
+        <span class="green">URL:</span><br><a href="${request.request.url}" target="_blank" class="code"><pre>${request.request.url}</pre></a><br><br>
+        <span class="green">Preview:</span><br><pre>${body}</pre><br><br>
+      `;
+    } else {
+      const queryParameters = request.request.queryString.map(param => `${param.name}: ${param.value}`).join('\n');
+      const requestPayload = request.request.postData ? JSON.stringify(JSON.parse(request.request.postData.text), null, 2) : 'N/A';
+      details = `
+        <span class="green">URL:</span><br><a href="${request.request.url}" target="_blank" class="code"><pre>${request.request.url}</pre></a><br><br>
+        <span class="green">Query Parameters:</span><br><pre>${queryParameters}</pre><br><br>
+        <span class="green">Request Payload:</span><br><pre>${requestPayload}</pre>
+      `;
+    }
+
     requestDetails.innerHTML = details;
     overlay.style.display = 'block';
+  });
 }
 
 // Load saved filter value when the panel opens
@@ -315,4 +338,3 @@ chrome.storage.sync.get('filterValue', ({ filterValue }) => {
     tagCoButton.addEventListener('click', () => {
         chrome.storage.sync.set({ filterValue: filterInput.value });
     });
-  
