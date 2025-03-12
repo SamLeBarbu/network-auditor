@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Network Auditor",
-  "version": "1.01",
+  "name": "Network Auditor (beta version)",
+  "version": "1.02",
   "description": "A Chrome extension that adds a new panel in the Developer Tools to filter network requests.",
   "permissions": [
     "tabs",
