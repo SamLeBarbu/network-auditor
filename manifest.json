@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Network Auditor",
+  "version": "1.01",
+  "description": "A Chrome extension that adds a new panel in the Developer Tools to filter network requests.",
+  "permissions": [
+    "tabs",
+    "webRequest",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "js/background.min.js"
+  },
+  "devtools_page": "html/devtools.html",
+  "action": {
+    "default_popup": "html/panel.html",
+    "default_icon": {
+      "16": "icons/icon-16x16.png",
+      "48": "icons/icon-48x48.png",
+      "128": "icons/icon-128x128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16x16.png",
+    "48": "icons/icon-48x48.png",
+    "128": "icons/icon-128x128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["html/panel.html", "css/styles.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

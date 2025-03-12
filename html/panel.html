@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Auditor</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div class="panel">
+        <div class="filter-container">
+            <button id="gtmButton">GTM</button>
+            <button id="tagCoButton">TagCo</button>
+            <button id="ga4Button">GA4</button>
+            <button id="pianoButton">Piano</button>
+            <button id="piwikButton">Piwik</button>
+            <button id="csButton">CS</button>
+            <button id="clarityButton">Clarity</button>
+            <button id="kameleoonButton">Kameleoon</button>
+            <button id="abtastyButton">AB Tasty</button>
+            <button id="bingButton">Bing</button>
+            <br><br>
+            <input type="text" id="filter-input" class="filter-input" placeholder="Enter filter (AND/OR)">
+            <select id="filter-type">
+                <option value="or" selected>OR</option>
+                <option value="and">AND</option>
+            </select>
+            <br><br>
+            <button id="clearFilter">Clear Filter</button>
+            <button id="clearList">Clear List</button>
+        </div>
+        <table id="request-table" class="request-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Request</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody id="request-list" class="request-list"></tbody>
+        </table>
+    </div>
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <button id="closeOverlay" class="close-overlay">X</button>
+            <h2>Request Details</h2>
+            <pre id="requestDetails"></pre>
+        </div>
+    </div>
+    <script src="../js/panel.min.js"></script>
+</body>
+</html>
