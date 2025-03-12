@@ -43,16 +43,22 @@ button {
     padding: 8px 12px;
     border: none;
     border-radius: 4px;
-    background-color: #eb3678;
-    color: white;
+    background-color: #36eba9;
+    color: #280137;
     cursor: pointer;
     margin-left: 10px;
+    font-weight: bold;
 }
 
-#clearFilter, #clearList {
+#clearList {
     font-weight: bold;
-    color: #280137;
-    background-color: #36eba9;
+    color: white;
+    background-color: #eb3678;
+    float: right;
+}
+
+.divFilters {
+    display: none;
 }
 
 
@@ -194,6 +200,20 @@ button {
   overflow-wrap: break-word;  /* Standard property for newer browsers */
 
 }
+
+a.code:link {
+    color: white;
+}
+a.code:visited {
+    color: white;
+}
+a.code:hover {
+    color: white;
+}
+a.code:active {
+    color: white;
+}
+
 .overlay::-webkit-scrollbar {
     display: none;
   }

@@ -1,14 +1,21 @@
 const filterInput = document.getElementById('filter-input');
 const filterTypeSelect = document.getElementById('filter-type');
 const requestList = document.getElementById('request-list');
+const showFilters = document.getElementById('showFilters');
+const clearFilters = document.getElementById('clearFilters');
 const clearListButton = document.getElementById('clearList');
 const overlay = document.getElementById('overlay');
 const closeOverlayButton = document.getElementById('closeOverlay');
 const requestDetails = document.getElementById('requestDetails');
-const gtmButton = document.getElementById('gtmButton');
+const gtmButtonClientSide = document.getElementById('gtmButtonClientSide');
+const gtmButtonServerSide = document.getElementById('gtmButtonServerSide');
 const tagCoButton = document.getElementById('tagCoButton');
-const ga4Button = document.getElementById('ga4Button');
+const ga4ButtonClientSide = document.getElementById('ga4ButtonClientSide');
+const ga4ButtonServerSide = document.getElementById('ga4ButtonServerSide');
+const googleAdsButton = document.getElementById('googleAdsButton');
+const googleTagButton = document.getElementById('googleTagButton');
 const pianoButton = document.getElementById('pianoButton');
+const atinternetButton = document.getElementById('atinternetButton');
 const piwikButton = document.getElementById('piwikButton');
 const csButton = document.getElementById('csButton');
 const clarityButton = document.getElementById('clarityButton');
@@ -38,8 +45,20 @@ filterTypeSelect.addEventListener('change', updateRequestList);
 //   applyNetworkFilters(filters);
 // });
 
+showFilters.addEventListener('click', () => {
+    if(document.getElementById('divFilters').style.display === 'block') {
+        document.getElementById('divFilters').style.display = 'none';
+        showFilters.style.backgroundColor = '#36eba9';
+        showFilters.style.color = '#280137';
 
-document.getElementById('clearFilter').addEventListener('click', () => {
+    } else {
+        document.getElementById('divFilters').style.display = 'block';
+        showFilters.style.backgroundColor = '#eb3678';
+        showFilters.style.color = 'white';
+    }
+});
+
+clearFilters.addEventListener('click', () => {
     document.getElementById('filter-input').value = '';
     updateRequestList();
     
@@ -69,7 +88,16 @@ pianoButton.addEventListener('click', () => {
     if (filterInput.value.trim() !== '') {
         filterInput.value += ' ';
     }
-    filterInput.value += 'hit.xiti event?s=';
+    filterInput.value += 'xiti.com/event';
+    updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
+});
+
+atinternetButton.addEventListener('click', () => {
+    if (filterInput.value.trim() !== '') {
+        filterInput.value += ' ';
+    }
+    filterInput.value += 'xiti.com/hit.xiti';
     updateRequestList();
     chrome.storage.sync.set({ filterValue: filterInput.value });
 });
@@ -115,12 +143,12 @@ bingButton.addEventListener('click', () => {
     if (filterInput.value.trim() !== '') {
         filterInput.value += ' ';
     }
-    filterInput.value += 'bat.bing.com';
+    filterInput.value += 'bat.bing.com/action bat.bing.com/p/action bat.bing.net/actionp';
     updateRequestList();
     chrome.storage.sync.set({ filterValue: filterInput.value });
 });
 
-gtmButton.addEventListener('click', () => {
+gtmButtonClientSide.addEventListener('click', () => {
     if (filterInput.value.trim() !== '') {
         filterInput.value += ' ';
     }
@@ -129,11 +157,47 @@ gtmButton.addEventListener('click', () => {
     chrome.storage.sync.set({ filterValue: filterInput.value });
 });
 
-ga4Button.addEventListener('click', () => {
+gtmButtonServerSide.addEventListener('click', () => {
+    if (filterInput.value.trim() !== '') {
+        filterInput.value += ' ';
+    }
+    filterInput.value += 'gtm.js';
+    updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
+});
+
+ga4ButtonClientSide.addEventListener('click', () => {
     if (filterInput.value.trim() !== '') {
         filterInput.value += ' ';
     }
     filterInput.value += 'google-analytics.com/collect';
+    updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
+});
+
+ga4ButtonServerSide.addEventListener('click', () => {
+    if (filterInput.value.trim() !== '') {
+        filterInput.value += ' ';
+    }
+    filterInput.value += '/g/collect';
+    updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
+});
+
+googleTagButton.addEventListener('click', () => {
+    if (filterInput.value.trim() !== '') {
+        filterInput.value += ' ';
+    }
+    filterInput.value += 'google.com/ccm/collect';
+    updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
+});
+
+googleAdsButton.addEventListener('click', () => {
+    if (filterInput.value.trim() !== '') {
+        filterInput.value += ' ';
+    }
+    filterInput.value += 'googletagmanager.com/gtag/js?id=AW- g.doubleclick.net/';
     updateRequestList();
     chrome.storage.sync.set({ filterValue: filterInput.value });
 });
@@ -226,7 +290,7 @@ function showRequestDetails(request) {
     const queryParameters = request.request.queryString.map(param => `${param.name}: ${param.value}`).join('\n');
     const requestPayload = request.request.postData ? JSON.stringify(JSON.parse(request.request.postData.text), null, 2) : 'N/A';
     const details = `
-    <span class="green">URL:</span><br><pre>${request.request.url}</pre><br><br>
+    <span class="green">URL:</span><br><a href="${request.request.url}" target="_b;ank" class="code"><pre>${request.request.url}</pre></a><br><br>
     <span class="green">Query Parameters:</span><br><pre>${queryParameters}</pre><br><br>
     <span class="green">Request Payload:</span><br><pre>${requestPayload}</pre>
     `;

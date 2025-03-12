@@ -8,26 +8,42 @@
 </head>
 <body>
     <div class="panel">
-        <div class="filter-container">
-            <button id="gtmButton">GTM</button>
-            <button id="tagCoButton">TagCo</button>
-            <button id="ga4Button">GA4</button>
-            <button id="pianoButton">Piano</button>
-            <button id="piwikButton">Piwik</button>
-            <button id="csButton">CS</button>
-            <button id="clarityButton">Clarity</button>
+
+        <br>
+        <input type="text" id="filter-input" class="filter-input" placeholder="Enter filter (AND/OR)">
+        <select id="filter-type">
+            <option value="or" selected>OR</option>
+            <option value="and">AND</option>
+        </select>
+        <br><br>
+        <button id="showFilters">Show Filters</button>
+        <button id="clearFilters">Clear Filters</button>
+        <button id="clearList">Clear List</button><br><br>
+        <div id="divFilters" class="divFilters">
+            Tag Managers: <br><br>
+            <button id="gtmButtonClientSide">GTM client-side</button>
+            <button id="gtmButtonServerSide">GTM server-side</button>
+            <button id="tagCoButton">TagCo</button><br><br>
+
+            Web Analytics: <br><br>
+            <button id="ga4ButtonClientSide">GA4 client-side</button>
+            <button id="ga4ButtonServerSide">GA4 server-side</button>
+            <button id="atinternetButton">AT Internet</button>
+            <button id="pianoButton">Piano Analytics</button>
+            <button id="piwikButton">Piwik</button><br><br>
+
+            UX: <br><br>
+            <button id="csButton">Contentsquare</button>
+            <button id="clarityButton">Clarity</button><br><br>
+
+            A/B testing: <br><br>
             <button id="kameleoonButton">Kameleoon</button>
-            <button id="abtastyButton">AB Tasty</button>
+            <button id="abtastyButton">AB Tasty</button><br><br>
+
+            Advertising: <br><br>
+            <button id="googleTagButton">Google Tag</button>
+            <button id="googleAdsButton">Google Ads</button>
             <button id="bingButton">Bing</button>
-            <br><br>
-            <input type="text" id="filter-input" class="filter-input" placeholder="Enter filter (AND/OR)">
-            <select id="filter-type">
-                <option value="or" selected>OR</option>
-                <option value="and">AND</option>
-            </select>
-            <br><br>
-            <button id="clearFilter">Clear Filter</button>
-            <button id="clearList">Clear List</button>
         </div>
         <table id="request-table" class="request-table">
             <thead>
