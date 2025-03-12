@@ -213,9 +213,10 @@ function showRequestDetails(request) {
     const queryParameters = request.request.queryString.map(param => `${param.name}: ${param.value}`).join('\n');
     const requestPayload = request.request.postData ? JSON.stringify(JSON.parse(request.request.postData.text), null, 2) : 'N/A';
     const details = `
-        Query Parameters:\n${queryParameters}\n\n
-        Request Payload:\n${requestPayload}
+    <span class="green">URL:</span><br><pre>${request.request.url}</pre><br><br>
+    <span class="green">Query Parameters:</span><br><pre>${queryParameters}</pre><br><br>
+    <span class="green">Request Payload:</span><br><pre>${requestPayload}</pre>
     `;
-    requestDetails.textContent = details;
+    requestDetails.innerHTML = details;
     overlay.style.display = 'block';
 }
