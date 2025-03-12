@@ -1,3 +1,13 @@
+html {
+    overflow: hidden;
+    overflow-y: scroll; /* Enable vertical scrolling */
+  }
+  
+  ::-webkit-scrollbar {
+      width: 0px;
+      background: transparent; /* make scrollbar transparent */
+  }
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -41,19 +51,45 @@ h1 {
 
 button {
     padding: 8px 12px;
-    border: none;
+    border: 1px solid white;
     border-radius: 4px;
+    background-color: #1a0024;;
+    color: white;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 11px;
+}
+
+button:disabled {
+    background-color: #333333;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+.buttonGreen {
     background-color: #36eba9;
     color: #280137;
-    cursor: pointer;
-    margin-left: 10px;
+    border: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.subTitle {
+    font-size: 16px;
+    color: #36eba9;
     font-weight: bold;
 }
 
-#clearList {
+#clearFilters, #clearRequests {
     font-weight: bold;
     color: white;
     background-color: #eb3678;
+    border: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#clearRequests {
     float: right;
 }
 
@@ -67,6 +103,7 @@ button {
     font-size: 24px;
     color: #280137;
     background-color: #36eba9;
+    margin-left: 20px;
 }
 .green {
     color: #36eba9;
@@ -147,12 +184,12 @@ button {
     right: 0;
     width: 60%;
     height: 100%;
-    background-color: rgba(26, 0, 36, 0.8);
+    background-color: rgba(26, 0, 36, 0.9);
     color: white;
     display: none;
     z-index: 1000;
     overflow-y: auto; /* Enable vertical scrolling */
-    padding-top: 50px;
+    padding-top: 10px;
 
     padding-left: 5px;
     padding-right: 5px;
@@ -175,13 +212,13 @@ button {
 
 }
 
+#requestDetails {
+    padding-bottom: 50px;
+}
 #requestDetails pre {
     padding-left: 5px;
     padding-right: 5px;
     font-size: 13px;
-    /* These are technically the same, but use both */
-    overflow-wrap: break-word;
-    word-wrap: break-word;
 
     -ms-word-break: break-all;
     /* This is the dangerous one in WebKit, as it breaks things wherever */
@@ -230,4 +267,11 @@ a.code:active {
 .page-url-item .page-url {
     text-align: center;
     font-weight: bold;
+}
+
+.favicon {
+    width: 14px;
+    height: 14px;
+    vertical-align:middle;
+    margin-right: 4px;
 }

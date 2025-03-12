@@ -3,10 +3,15 @@ const filterTypeSelect = document.getElementById('filter-type');
 const requestList = document.getElementById('request-list');
 const showFilters = document.getElementById('showFilters');
 const clearFilters = document.getElementById('clearFilters');
-const clearListButton = document.getElementById('clearList');
+const clearRequestsButton = document.getElementById('clearRequests');
 const overlay = document.getElementById('overlay');
 const closeOverlayButton = document.getElementById('closeOverlay');
 const requestDetails = document.getElementById('requestDetails');
+const trustoCoButton = document.getElementById('trustoCoButton');
+const oneTrustButton = document.getElementById('oneTrustButton');
+const cookieBotButton = document.getElementById('cookieBotButton');
+const didomiButton = document.getElementById('didomiButton');
+const tarteAuCitronButton = document.getElementById('tarteAuCitronButton');
 const gtmButtonClientSide = document.getElementById('gtmButtonClientSide');
 const gtmButtonServerSide = document.getElementById('gtmButtonServerSide');
 const tagCoButton = document.getElementById('tagCoButton');
@@ -22,6 +27,8 @@ const clarityButton = document.getElementById('clarityButton');
 const kameleoonButton = document.getElementById('kameleoonButton');
 const abtastyButton = document.getElementById('abtastyButton');
 const bingButton = document.getElementById('bingButton');
+
+let favicon;
 
 let networkRequests = [];
 let pageUrls = [];
@@ -52,11 +59,14 @@ showFilters.addEventListener('click', () => {
         document.getElementById('divFilters').style.display = 'none';
         showFilters.style.backgroundColor = '#36eba9';
         showFilters.style.color = '#280137';
+        showFilters.innerText = 'Show predefined filters';
 
     } else {
         document.getElementById('divFilters').style.display = 'block';
         showFilters.style.backgroundColor = '#eb3678';
         showFilters.style.color = 'white';
+        showFilters.innerText = 'Hide predefined filters';
+        overlay.style.display = 'none';
     }
 });
 
@@ -67,7 +77,7 @@ clearFilters.addEventListener('click', () => {
     chrome.storage.sync.set({ filterValue: filterInput.value });
 });
 
-clearListButton.addEventListener('click', () => {
+clearRequestsButton.addEventListener('click', () => {
     networkRequests = [];
     pageUrls = [];
     updateRequestList();
@@ -85,6 +95,25 @@ tagCoButton.addEventListener('click', () => {
     updateRequestList();
     chrome.storage.sync.set({ filterValue: filterInput.value });
 });
+
+trustCoButton.addEventListener('click', () => {
+    if (filterInput.value.trim() !== '') {
+        filterInput.value += ' ';
+    }
+    filterInput.value += 'cdn.trustcommander.net/privacy';
+    updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
+});
+
+oneTrustButton.addEventListener('click', () => {
+    if (filterInput.value.trim() !== '') {
+        filterInput.value += ' ';
+    }
+    filterInput.value += 'cdn.cookielaw.org/scripttemplates';
+    updateRequestList();
+    chrome.storage.sync.set({ filterValue: filterInput.value });
+});
+
 
 pianoButton.addEventListener('click', () => {
     if (filterInput.value.trim() !== '') {
@@ -108,7 +137,7 @@ csButton.addEventListener('click', () => {
     if (filterInput.value.trim() !== '') {
         filterInput.value += ' ';
     }
-    filterInput.value += 'c.contentsquare.net';
+    filterInput.value += 'contentsquare.net/uxa contentsquare.net/pageview contentsquare.net/v2';
     updateRequestList();
     chrome.storage.sync.set({ filterValue: filterInput.value });
 });
@@ -262,13 +291,40 @@ function addRequestToTable(request) {
     } else {
         urlToDisplay = request.request.url.split("/").slice(-1);
     }
+
+    if (request.request.url.includes("gtm.js")) {
+        favicon = "gtm";
+    } else if (request.request.url.includes("cdn.tagcommander.com") || request.request.url.includes("cdn.trustcommander.net")) {
+        favicon = "commandersact";
+    } else if (request.request.url.includes("xiti.com/event")) {
+        favicon = "piano";
+    } else if (request.request.url.includes("xiti.com/hit.xiti")) {
+        favicon = "atinternet";
+    } else if (request.request.url.includes("contentsquare.net/uxa") || request.request.url.includes("contentsquare.net/v2") || request.request.url.includes("contentsquare.net/pageview")) {
+        favicon = "contentsquare";
+    } else if (request.request.url.includes("n.clarity.ms/collect")) {
+        favicon = "clarity";
+    } else if (request.request.url.includes("data.kameleoon.eu")) {
+        favicon = "kameleoon";
+    } else if (request.request.url.includes("try.abtasty.com") || request.request.url.includes("ariane.abtasty.com")) {
+        favicon = "abtasty";
+    } else if (request.request.url.includes("bat.bing.com/action") || request.request.url.includes("bat.bing.com/p/action") || request.request.url.includes("bat.bing.net/actionp")) {
+        favicon = "bing";
+    }
+     else {}
     // const initiatorType = request.initiator && request.initiator.url ? request.initiator.url : (request.initiator && request.initiator.type ? request.initiator.type : 'N/A');
     // const size = request.response.bodySize > 0 ? (request.response.bodySize / 1024).toFixed(2) + ' KB' : (request.response.contentLength ? (request.response.contentLength / 1024).toFixed(2) + ' KB' : 'N/A');
     const fileType = request.response.content.mimeType.split('/')[1];
     const listItem = document.createElement('tr');
+    // Check if favicon = gtm
+    if (favicon == "gtm" || favicon == "commandersact" || favicon == "piano" || favicon == "atinternet" || favicon == "contentsquare" || favicon == "clarity" || favicon == "kameleoon" || favicon == "abtasty" || favicon == "bing") {
+        favicon = `<img src="../favicons/favicon_${favicon}.png" alt="favicon" class="favicon">`;
+    } else {
+        favicon = "";
+    }
     listItem.className = 'request-item';
     listItem.innerHTML = `
-        <td title="${request.request.url}">/${urlToDisplay}</td>
+        <td title="${request.request.url}">${favicon}/${urlToDisplay}</td>
         <td>${request.response.status}</td>
         <td>${request.request.method}</td>
         <td>${fileType}</td>
@@ -277,7 +333,7 @@ function addRequestToTable(request) {
         
 
         // If url contains cdn.tagcommander.com and .js then isPreview is true
-        if (request.request.url.includes('cdn.tagcommander.com')) {
+        if ((request.request.url.includes('cdn.tagcommander.com') || request.request.url.endsWith('.js')  || request.request.url.includes('.json')) && !request.request.url.includes('xiti.com')) {
             isPreview = true;
         } else {
             isPreview = false;
@@ -300,20 +356,49 @@ function addPageUrlRow(url) {
 function showRequestDetails(request) {
   request.getContent((body) => {
     let details;
+    let urlRequest = request.request.url;
     console.log('isPreview', isPreview);
+
+    if (urlRequest.includes("%")) {
+        urlRequest = decodeURIComponent(urlRequest);
+    }
+
+
     if (isPreview === true) {
+
+        
+
+        if(request.request.url.includes('.json')) {
+            body = JSON.stringify(JSON.parse(body), null, 2);
+        }
+
+
+
       details = `
-        <span class="green">URL:</span><br><a href="${request.request.url}" target="_blank" class="code"><pre>${request.request.url}</pre></a><br><br>
+        <span class="green">URL:</span><br><a href="${request.request.url}" target="_blank" class="code"><pre>${urlRequest}</pre></a><br><br>
         <span class="green">Preview:</span><br><pre>${body}</pre><br><br>
       `;
     } else {
-      const queryParameters = request.request.queryString.map(param => `${param.name}: ${param.value}`).join('\n');
-      const requestPayload = request.request.postData ? JSON.stringify(JSON.parse(request.request.postData.text), null, 2) : 'N/A';
-      details = `
-        <span class="green">URL:</span><br><a href="${request.request.url}" target="_blank" class="code"><pre>${request.request.url}</pre></a><br><br>
+        let queryParameters = request.request.queryString.map(param => `${param.name}: ${param.value}`).join('\n');
+        let requestPayload = request.request.postData ? JSON.stringify(JSON.parse(request.request.postData.text), null, 2) : 'N/A';
+        
+        // Check if queryParameters is a URL encoded string and decode it
+        if (queryParameters.includes("%")) {
+            queryParameters = decodeURIComponent(queryParameters);
+        }
+        
+        
+        // Check if requestPayload is a URL encoded string and decode it
+        if (requestPayload.includes("%")) {
+            requestPayload = decodeURIComponent(requestPayload);
+        }
+                
+
+        details = `
+        <span class="green">URL:</span><br><a href="${request.request.url}" target="_blank" class="code"><pre>${urlRequest}</pre></a><br><br>
         <span class="green">Query Parameters:</span><br><pre>${queryParameters}</pre><br><br>
         <span class="green">Request Payload:</span><br><pre>${requestPayload}</pre>
-      `;
+        `;
     }
 
     requestDetails.innerHTML = details;
