@@ -53,7 +53,7 @@ button {
     padding: 8px 12px;
     border: 1px solid white;
     border-radius: 4px;
-    background-color: #1a0024;;
+    background-color: #280137;;
     color: white;
     cursor: pointer;
     margin: 5px;
@@ -78,6 +78,7 @@ button:disabled {
     font-size: 16px;
     color: #36eba9;
     font-weight: bold;
+    margin-left: 10px;
 }
 
 #clearFilters, #clearRequests {
@@ -95,6 +96,51 @@ button:disabled {
 
 .divFilters {
     display: none;
+
+}
+
+.divFiltersIn {
+    animation-duration: 0.5s;
+    animation-name: slide-in;
+    background-color: #1a0024;
+    padding: 10px;
+
+}
+
+.divFiltersOut {
+    animation-duration: 0.5s;
+    animation-name: slide-out;
+    background-color: #1a0024;
+    padding: 10px;
+
+}
+
+
+
+@keyframes slide-in {
+    from {
+        translate: -150vw 0;
+        scale: 100% 1;
+    }
+
+    to {
+        translate: 0 0;
+        scale: 100% 1;
+        display: block;
+    }
+}
+
+@keyframes slide-out {
+    from {
+        translate: 0 0;
+        scale: 100% 1;
+    }
+
+    to {
+        translate: -150vw 0;
+        scale: 100% 1;
+        display: none;
+    }
 }
 
 
@@ -135,16 +181,17 @@ button:disabled {
 .request-table th {
     background-color: #1a0024cc; /* Dark header background */
     color: #e0e0e0; /* Light text color */
+    text-align: center;
 }
 
 .request-table th:nth-child(1), .request-table td:nth-child(1) {
-    width: 70%;
+    width: auto;
 }
 
 .request-table th:nth-child(2), .request-table td:nth-child(2),
 .request-table th:nth-child(3), .request-table td:nth-child(3),
 .request-table th:nth-child(4), .request-table td:nth-child(4) {
-    width: 10%;
+    width: 70px;
 }
 
 .request-item {

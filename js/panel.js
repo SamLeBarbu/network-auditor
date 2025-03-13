@@ -55,18 +55,26 @@ filterTypeSelect.addEventListener('change', updateRequestList);
 // });
 
 showFilters.addEventListener('click', () => {
-    if(document.getElementById('divFilters').style.display === 'block') {
-        document.getElementById('divFilters').style.display = 'none';
+    // Check if divFilters data-status attributer is equals to show
+    if(document.getElementById('divFilters').attributes['data-status'].value === 'show') {
+        document.getElementById('divFilters').className = 'divFiltersOut';
         showFilters.style.backgroundColor = '#36eba9';
         showFilters.style.color = '#280137';
         showFilters.innerText = 'Show predefined filters';
+        document.getElementById('divFilters').attributes['data-status'].value = 'hidden';
+        // Wait for the animation to finish
+        setTimeout(() => {
+            document.getElementById('divFilters').style.display = 'none';
+        }, 400);
 
     } else {
+        document.getElementById('divFilters').className = 'divFiltersIn';
         document.getElementById('divFilters').style.display = 'block';
         showFilters.style.backgroundColor = '#eb3678';
         showFilters.style.color = 'white';
         showFilters.innerText = 'Hide predefined filters';
         overlay.style.display = 'none';
+        document.getElementById('divFilters').attributes['data-status'].value = 'show';
     }
 });
 
