@@ -10,11 +10,8 @@
     <div class="panel">
 
         <br>
-        <input type="text" id="filter-input" class="filter-input" placeholder="Enter filter (AND/OR)">
-        <select id="filter-type">
-            <option value="or" selected>OR</option>
-            <option value="and">AND</option>
-        </select>
+        <input type="text" id="filterInput" class="filter-input" placeholder="Enter filter (AND/OR)">
+        <input type="hidden" id="filterHidden" class="filter-input" >
         <br><br>
         <button id="showFilters" class="buttonGreen">Show predefined filters</button>
         <button id="clearRequests">Clear requests</button><br><br>
@@ -61,7 +58,7 @@
             
             <button id="clearFilters">Clear filters</button>
         </div>
-        <table id="request-table" class="request-table">
+        <table id="requestTable" class="request-table">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -70,7 +67,7 @@
                     <th>Type</th>
                 </tr>
             </thead>
-            <tbody id="request-list" class="request-list"></tbody>
+            <tbody id="requestList" class="request-list"></tbody>
         </table>
     </div>
     <div id="overlay" class="overlay">
@@ -79,6 +76,6 @@
             <div id="requestDetails"></div>
         </div>
     </div>
-    <script src="../js/panel.min.js"></script>
+    <script src="../js/panel.js"></script>
 </body>
 </html>
