@@ -1,5 +1,6 @@
 const filterInput = document.getElementById("filterInput");
 const filterHidden = document.getElementById("filterHidden");
+const activatedButtons = document.getElementById("activatedButtons");
 // const filterTypeSelect = document.getElementById("filterType");
 const requestList = document.getElementById("requestList");
 const showFilters = document.getElementById("showFilters");
@@ -8,16 +9,16 @@ const clearRequestsButton = document.getElementById("clearRequests");
 const overlay = document.getElementById("overlay");
 const closeOverlayButton = document.getElementById("closeOverlay");
 const requestDetails = document.getElementById("requestDetails");
-const trustoCoButton = document.getElementById("trustoCoButton");
+const trustCoButton = document.getElementById("trustCoButton");
 const oneTrustButton = document.getElementById("oneTrustButton");
 const cookieBotButton = document.getElementById("cookieBotButton");
 const didomiButton = document.getElementById("didomiButton");
 const tarteAuCitronButton = document.getElementById("tarteAuCitronButton");
-const gtmButtonClientSide = document.getElementById("gtmButtonClientSide");
-const gtmButtonServerSide = document.getElementById("gtmButtonServerSide");
+const gtmClientSideButton = document.getElementById("gtmClientSideButton");
+const gtmServerSideButton = document.getElementById("gtmServerSideButton");
 const tagCoButton = document.getElementById("tagCoButton");
-const ga4ButtonClientSide = document.getElementById("ga4ButtonClientSide");
-const ga4ButtonServerSide = document.getElementById("ga4ButtonServerSide");
+const ga4ClientSideButton = document.getElementById("ga4ClientSideButton");
+const ga4ServerSideButton = document.getElementById("ga4ServerSideButton");
 const googleAdsButton = document.getElementById("googleAdsButton");
 const googleTagButton = document.getElementById("googleTagButton");
 const pianoButton = document.getElementById("pianoButton");
@@ -85,11 +86,37 @@ showFilters.addEventListener("click", () => {
 });
 
 clearFilters.addEventListener("click", () => {
+  const normalButtonsToReset = chrome.storage.sync.get(
+    "activatedButtonsValue",
+    ({ activatedButtonsValue }) => {
+      const activatedButtonsArray = activatedButtonsValue.split("|");
+      activatedButtonsArray.forEach((button) => {
+        document.getElementById(button).className = "normalButton";
+        document.getElementById("tiny_" + button).style.display = "none";
+      });
+    }
+  );
+
   document.getElementById("filterInput").value = "";
   document.getElementById("filterHidden").value = "";
+  document.getElementById("activatedButtons").value = "";
 
   chrome.storage.sync.set({ filterInputValue: "" });
   chrome.storage.sync.set({ filterHiddenValue: "" });
+  chrome.storage.sync.set({ activatedButtonsValue: "" });
+
+  //   //    Change display of buttons with class tinyButton to none
+  //   const tinyButtons = document.getElementsByClassName("tinyButton");
+  //   for (let i = 0; i < tinyButtons.length; i++) {
+  //     tinyButtons[i].style.display = "none";
+  //   }
+
+  //   // Change all the button with class normalButtonGreen to normalButton
+  //   const normalButtonsGreen =
+  //     document.getElementsByClassName("normalButtonGreen");
+  //   for (let i = 0; i < normalButtonsGreen.length; i++) {
+  //     normalButtonsGreen[i].style.backgroundColor = "red";
+  //   }
 
   updateRequestList();
 });
@@ -104,166 +131,65 @@ closeOverlayButton.addEventListener("click", () => {
   overlay.style.display = "none";
 });
 
-tagCoButton.addEventListener("click", () => {
+function activateButton(buttonName, syntax) {
   if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
+    filterHidden.value += " OR ";
+    activatedButtons.value += "|";
   }
-  filterHidden.value += "cdn.tagcommander.com";
+  filterHidden.value += syntax;
+  activatedButtons.value += buttonName;
   updateRequestList();
   chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
+  chrome.storage.sync.set({ activatedButtonsValue: activatedButtons.value });
+  document.getElementById(buttonName).className = "normalButtonGreen";
+  document.getElementById("tiny_" + buttonName).style.display = "inline";
+}
 
-trustCoButton.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
+function deactivateButton(buttonName, syntax) {
+  // Remove syntax from filterHidden
+  filterHidden.value = filterHidden.value.replace(syntax, "");
+  filterHidden.value = filterHidden.value.replace(" OR  OR ", " OR ");
+  // If filterHidden ends with " OR " then remove it
+  if (filterHidden.value.endsWith(" OR ")) {
+    filterHidden.value = filterHidden.value.slice(0, -4);
   }
-  filterHidden.value += "cdn.trustcommander.net/privacy";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
-
-oneTrustButton.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
+  if (filterHidden.value.startsWith(" OR ")) {
+    filterHidden.value = filterHidden.value.slice(4);
   }
-  filterHidden.value += "cdn.cookielaw.org/scripttemplates";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
 
-pianoButton.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
+  // Remove buttonName from activatedButtons
+  activatedButtons.value = activatedButtons.value.replace(buttonName, "");
+  activatedButtons.value = activatedButtons.value.replace("||", "|");
+  // If activatedButtons ends with "|" then remove it
+  if (activatedButtons.value.endsWith("|")) {
+    activatedButtons.value = activatedButtons.value.slice(0, -1);
   }
-  filterHidden.value += "xiti.com/event";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
-
-atinternetButton.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
+  if (activatedButtons.value.startsWith("|")) {
+    activatedButtons.value = activatedButtons.value.slice(1);
   }
-  filterHidden.value += "xiti.com/hit.xiti";
   updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
 
-csButton.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
-  }
-  filterHidden.value +=
-    "contentsquare.net/uxa contentsquare.net/pageview contentsquare.net/v2";
-  updateRequestList();
   chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
+  chrome.storage.sync.set({ activatedButtonsValue: activatedButtons.value });
+  document.getElementById(buttonName).className = "normalButton";
+  document.getElementById("tiny_" + buttonName).style.display = "none";
+}
 
-clarityButton.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
-  }
-  filterHidden.value += "n.clarity.ms/collect";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
+// find all the buttons with class normalButton
+const buttons = Array.from(document.getElementsByClassName("normalButton")).map(
+  (button) => button.id
+);
 
-kameleoonButton.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
-  }
-  filterHidden.value += "data.kameleoon.eu";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
+buttons.forEach((buttonId) => {
+  const button = document.getElementById(buttonId);
+  button.addEventListener("click", () => {
+    if (button.className === "normalButton") {
+      activateButton(buttonId, button.attributes["data-syntax"].value);
+    } else {
+      deactivateButton(buttonId, button.attributes["data-syntax"].value);
+    }
+  });
 });
-
-abtastyButton.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
-  }
-  filterHidden.value += "try.abtasty.com ariane.abtasty.com";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
-
-bingButton.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
-  }
-  filterHidden.value +=
-    "bat.bing.com/action bat.bing.com/p/action bat.bing.net/actionp";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
-
-gtmButtonClientSide.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
-  }
-  filterHidden.value += "www.googletagmanager.com";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
-
-gtmButtonServerSide.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
-  }
-  filterHidden.value += "gtm.js";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
-
-ga4ButtonClientSide.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
-  }
-  filterHidden.value += "google-analytics.com/collect";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
-
-ga4ButtonServerSide.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
-  }
-  filterHidden.value += "/g/collect";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
-
-googleTagButton.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
-  }
-  filterHidden.value += "google.com/ccm/collect";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
-
-googleAdsButton.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
-  }
-  filterHidden.value +=
-    "googletagmanager.com/gtag/js?id=AW- g.doubleclick.net/";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
-
-piwikButton.addEventListener("click", () => {
-  if (filterHidden.value.trim() !== "") {
-    filterHidden.value += " ";
-  }
-  filterHidden.value += "ppms.php";
-  updateRequestList();
-  chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
-});
-
-// function parseFilters(filterText) {
-//   const filters = filterText.split(/\s+/).map((f) => f.trim());
-//   return filters;
-// }
 
 function applyNetworkFilters(filters) {
   chrome.devtools.network.onRequestFinished.addListener((request) => {
@@ -296,11 +222,6 @@ function updateRequestList() {
     filterCombined = "";
   }
 
-  console.log("filterCombined: ", filterCombined);
-  console.log("filterCombined.trim: ", filterCombined.trim());
-  //   const filterType = filterTypeSelect.value;
-  //   const filters = parseFilters(filterInputValue);
-
   requestList.innerHTML = "";
 
   pageUrls.forEach((page) => {
@@ -320,23 +241,6 @@ function updateRequestList() {
         addRequestToTable(request);
       }
     });
-    // const filteredRequests = networkRequests.filter((request) => {
-    //   // Build the JavaScript condition
-    //   const condition = buildCondition(filterInputValue);
-
-    //   const url = request.request.url.toLowerCase();
-
-    //   // const line = lorem[i].toLowerCase();
-    //   // Evaluate the expression for each line
-    //   if (eval(condition)) {
-    //     addRequestToTable(request);
-    //   } else {
-    //   }
-    // });
-
-    // filteredRequests.forEach((request) => {
-    //   addRequestToTable(request);
-    // });
   });
 }
 
@@ -501,12 +405,32 @@ chrome.storage.sync.get("filterHiddenValue", ({ filterHiddenValue }) => {
   }
 });
 
+chrome.storage.sync.get(
+  "activatedButtonsValue",
+  ({ activatedButtonsValue }) => {
+    if (activatedButtonsValue) {
+      console.log("activatedButtonsValue", activatedButtonsValue);
+      activatedButtons.value = activatedButtonsValue;
+      const activatedButtonsArray = activatedButtonsValue.split("|");
+      activatedButtonsArray.forEach((button) => {
+        document.getElementById(button).className = "normalButtonGreen";
+        document.getElementById("tiny_" + button).style.display = "inline";
+      });
+    } else {
+      console.log("activatedButtonsValue", activatedButtonsValue);
+    }
+  }
+);
+
 // Save updates to storage whenever the user types
 filterInput.addEventListener("input", () => {
   chrome.storage.sync.set({ filterInputValue: filterInput.value });
 });
 filterHidden.addEventListener("input", () => {
   chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
+});
+activatedButtons.addEventListener("input", () => {
+  chrome.storage.sync.set({ activatedButtonsValue: activatedButtons.value });
 });
 
 // Save updates to storage whenever the click on buttons

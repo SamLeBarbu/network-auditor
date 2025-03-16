@@ -25,11 +25,7 @@ h1 {
     color: #ffffff; /* White text color */
 }
 
-.filter-container {
-    margin-bottom: 15px;
-}
-
-.filter-input {
+.filterInput {
     width: calc(100% - 120px);
     padding: 8px;
     border: 1px solid #444444; /* Dark border */
@@ -39,17 +35,12 @@ h1 {
     display: inline-block;
 }
 
-#filter-type {
-    padding: 8px;
-    border: 1px solid #444444; /* Dark border */
-    border-radius: 4px;
-    background-color: #333333; /* Dark select background */
-    color: #e0e0e0; /* Light text color */
-    display: inline-block;
-    margin-left: 10px;
+.tinyButtonsDiv {
+    min-height: 24px;
+    margin: 0px;
 }
 
-button {
+.normalButton {
     padding: 8px 12px;
     border: 1px solid white;
     border-radius: 4px;
@@ -60,18 +51,48 @@ button {
     font-size: 11px;
 }
 
-button:disabled {
+.normalButton:disabled {
     background-color: #333333;
     color: #666666;
     cursor: not-allowed;
 }
 
+.tinyButton {
+    font-size: 9px;
+    padding: 4px 6px;
+    border: 1px solid white;
+    border-radius: 4px;
+    background-color: #280137;;
+    color: white;
+    cursor: default;
+    margin: 2px;
+    display: none;
+}
+
 .buttonGreen {
+    padding: 8px 12px;
+    border: 1px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
     background-color: #36eba9;
     color: #280137;
     border: none;
     font-weight: bold;
     font-size: 14px;
+}
+
+.normalButtonGreen {
+
+    
+    padding: 8px 12px;
+    border: 1px solid #280137;;
+    border-radius: 4px;
+    background-color: #36eba9;;
+    color: #280137;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 11px;
 }
 
 .subTitle {
@@ -82,6 +103,13 @@ button:disabled {
 }
 
 #clearFilters, #clearRequests {
+    
+    padding: 8px 12px;
+    border: 1px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+
     font-weight: bold;
     color: white;
     background-color: #eb3678;
@@ -162,14 +190,14 @@ button:disabled {
     padding: 0;
 }
 
-.request-table {
+.requestTable {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
     table-layout: fixed;
 }
 
-.request-table th, .request-table td {
+.requestTable th, .requestTable td {
     border: 1px solid #444444; /* Dark border */
     padding: 8px;
     text-align: left;
@@ -178,19 +206,19 @@ button:disabled {
     white-space: nowrap;
 }
 
-.request-table th {
+.requestTable th {
     background-color: #1a0024cc; /* Dark header background */
     color: #e0e0e0; /* Light text color */
     text-align: center;
 }
 
-.request-table th:nth-child(1), .request-table td:nth-child(1) {
+.requestTable th:nth-child(1), .requestTable td:nth-child(1) {
     width: auto;
 }
 
-.request-table th:nth-child(2), .request-table td:nth-child(2),
-.request-table th:nth-child(3), .request-table td:nth-child(3),
-.request-table th:nth-child(4), .request-table td:nth-child(4) {
+.requestTable th:nth-child(2), .requestTable td:nth-child(2),
+.requestTable th:nth-child(3), .requestTable td:nth-child(3),
+.requestTable th:nth-child(4), .requestTable td:nth-child(4) {
     width: 70px;
 }
 

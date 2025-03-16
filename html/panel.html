@@ -10,55 +10,87 @@
     <div class="panel">
 
         <br>
-        <input type="text" id="filterInput" class="filter-input" placeholder="Enter filter (AND/OR)">
-        <input type="hidden" id="filterHidden" class="filter-input" >
+        <input type="hidden" id="activatedButtons" class="filterInput">
+        <input type="hidden" id="filterHidden" class="filterInput">
+        <input type="text" id="filterInput" class="filterInput" placeholder="Enter filter (AND/OR)">
+        
         <br><br>
         <button id="showFilters" class="buttonGreen">Show predefined filters</button>
-        <button id="clearRequests">Clear requests</button><br><br>
+        <button id="clearRequests">Clear requests</button><br>
+        
+
         <div id="divFilters" class="divFilters" data-status="hidden">
             <span class="subTitle">Consent Managers: </span><br>
-            <button id="oneTrustButton">OneTrust</button>
-            <button id="trustCoButton">Trust Commander</button>
-            <button id="cookieBotButton" disabled>Cookiebot</button>
-            <button id="didomiButton" disabled>Didomi</button>
-            <button id="tarteAuCitronButton" disabled>Tarte Au Citron</button><br><br>
+            <button id="oneTrustButton" class="normalButton" data-syntax="cdn.cookielaw.org/scripttemplates">OneTrust</button>
+            <button id="trustCoButton" class="normalButton" data-syntax="cdn.trustcommander.net/privacy">Trust Commander</button>
+            <button id="cookieBotButton" class="normalButton" disabled>Cookiebot</button>
+            <button id="didomiButton" class="normalButton" disabled>Didomi</button>
+            <button id="tarteAuCitronButton" class="normalButton" disabled>Tarte Au Citron</button><br><br>
 
             <span class="subTitle">Tag Managers: </span><br>
-            <button id="gtmButtonClientSide">GTM client-side</button>
-            <button id="gtmButtonServerSide">GTM server-side</button>
-            <button id="tagCoButton">Tag Commander</button><br><br>
+            <button id="gtmClientSideButton" class="normalButton" data-syntax="www.googletagmanager.com">GTM client-side</button>
+            <button id="gtmServerSideButton" class="normalButton" data-syntax="gtm.js">GTM server-side</button>
+            <button id="tagCoButton" class="normalButton" data-syntax="cdn.tagcommander.com">Tag Commander</button><br><br>
 
             <span class="subTitle">Web Analytics: </span><br>
-            <button id="ga4ButtonClientSide">GA4 client-side</button>
-            <button id="ga4ButtonServerSide">GA4 server-side</button>
-            <button id="atinternetButton">AT Internet</button>
-            <button id="pianoButton">Piano Analytics</button>
-            <button id="piwikButton">Piwik</button>
-            <button id="matomoButton" disabled>Matomo</button><br><br>
+            <button id="ga4ClientSideButton" class="normalButton" data-syntax="google-analytics.com/collect">GA4 client-side</button>
+            <button id="ga4ServerSideButton" class="normalButton" data-syntax="/g/collect">GA4 server-side</button>
+            <button id="atinternetButton" class="normalButton" data-syntax="xiti.com/hit.xiti">AT Internet</button>
+            <button id="pianoButton" class="normalButton" data-syntax="xiti.com/event">Piano Analytics</button>
+            <button id="piwikButton" class="normalButton" data-syntax="ppms.php">Piwik</button>
+            <button id="matomoButton" class="normalButton" disabled>Matomo</button><br><br>
 
             <span class="subTitle">UX: </span><br>
-            <button id="csButton">Contentsquare</button>
-            <button id="clarityButton">Clarity</button>
-            <button id="hotjarButton" disabled>Hotjar</button><br><br>
+            <button id="csButton" class="normalButton" data-syntax="">Contentsquare</button>
+            <button id="clarityButton" class="normalButton" data-syntax="">Clarity</button>
+            <button id="hotjarButton" class="normalButton" disabled>Hotjar</button><br><br>
 
             <span class="subTitle">A/B testing: </span><br>
-            <button id="kameleoonButton">Kameleoon</button>
-            <button id="abtastyButton">AB Tasty</button><br><br>
+            <button id="kameleoonButton" class="normalButton" data-syntax="">Kameleoon</button>
+            <button id="abtastyButton" class="normalButton" data-syntax="">AB Tasty</button><br><br>
 
             <span class="subTitle">Advertising: </span><br>
-            <button id="googleTagButton">Google Tag</button>
-            <button id="googleAdsButton">Google Ads</button>
-            <button id="bingButton">Bing</button>
-            <button id="facebookButton" disabled>Facebook</button>
-            <button id="twitterButton" disabled>Twitter / X</button>
-            <button id="pinterestButton" disabled>Pinterest</button>
-            <button id="linkedinButton" disabled>LinkedIn</button>
-            <button id="leboncoinButton" disabled>Le Bon Coin</button><br><br>
+            <button id="googleTagButton" class="normalButton" data-syntax="">Google Tag</button>
+            <button id="googleAdsButton" class="normalButton" data-syntax="">Google Ads</button>
+            <button id="bingButton" class="normalButton" data-syntax="">Bing</button>
+            <button id="facebookButton" class="normalButton" disabled>Facebook</button>
+            <button id="twitterButton" class="normalButton" disabled>Twitter / X</button>
+            <button id="pinterestButton" class="normalButton" disabled>Pinterest</button>
+            <button id="linkedinButton" class="normalButton" disabled>LinkedIn</button>
+            <button id="leboncoinButton" class="normalButton" disabled>Le Bon Coin</button><br><br>
 
             
             <button id="clearFilters">Clear filters</button>
         </div>
-        <table id="requestTable" class="request-table">
+        <div id="tinyButtonsDiv" class="tinyButtonsDiv">
+            <button id="tiny_oneTrustButton" class="tinyButton">OneTrust</button>
+            <button id="tiny_trustCoButton" class="tinyButton">TrustCo</button>
+            <button id="tiny_cookieBotButton" class="tinyButton">Cookiebot</button>
+            <button id="tiny_didomiButton" class="tinyButton">Didomi</button>
+            <button id="tiny_tarteAuCitronButton" class="tinyButton">Tarte Au Citron</button>
+            <button id="tiny_gtmClientSideButton" class="tinyButton">GTM client</button>
+            <button id="tiny_gtmServerSideButton" class="tinyButton">GTM server</button>
+            <button id="tiny_tagCoButton" class="tinyButton">TagCo</button>
+            <button id="tiny_ga4ClientSideButton" class="tinyButton">GA4 client</button>
+            <button id="tiny_ga4ServerSideButton" class="tinyButton">GA4 server</button>
+            <button id="tiny_atinternetButton" class="tinyButton">AT</button>
+            <button id="tiny_pianoButton" class="tinyButton">Piano</button>
+            <button id="tiny_piwikButton" class="tinyButton">Piwik</button>
+            <button id="tiny_matomoButton" class="tinyButton">Matomo</button>
+            <button id="tiny_csButton" class="tinyButton">CS</button>
+            <button id="tiny_clarityButton" class="tinyButton">Clarity</button>
+            <button id="tiny_hotjarButton" class="tinyButton">HotJar</button>
+            <button id="tiny_kameleoonButton" class="tinyButton">Kameleoon</button>
+            <button id="tiny_abtastyButton" class="tinyButton">AB Tasty</button>
+            <button id="tiny_googleTagButton" class="tinyButton">G tag</button>
+            <button id="tiny_googleAdsButton" class="tinyButton">G Ads</button>
+            <button id="tiny_bingButton" class="tinyButton">Bing</button>
+            <button id="tiny_facebookButton" class="tinyButton">Facebook</button>
+            <button id="tiny_twitterButton" class="tinyButton">X</button>
+            <button id="tiny_linkedinButton" class="tinyButton">LinkedIn</button>
+            <button id="tiny_leboncoinButton" class="tinyButton">LBC</button>
+        </div>
+        <table id="requestTable" class="requestTable">
             <thead>
                 <tr>
                     <th>Name</th>
