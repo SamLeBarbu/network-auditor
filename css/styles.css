@@ -16,16 +16,34 @@ body {
     color: #e0e0e0; /* Light text color */
 }
 
+.menuItem {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    color: #36eba9;
+    margin:auto;
+    display: inline;
+    position: relative;
+    top: 20%;
+    cursor: pointer;
+}
 .divHeader {
     position: relative;
     z-index: 100 ;
     background-color: #280137;
     /* border: 1px solid red; Dark border */
     padding: 25px 0px 10px 0px;
-    margin: 0px;
-    margin-top: -25px;
+    margin: -25px 0px 0px 0px;
 }
 
+.divTopMenu {
+    position: relative;
+    z-index: 100 ;
+    background-color: #1a0024;
+    /* border: 1px solid red; Dark border */
+    height: 25px;
+    margin: -25px -10px 25px -10px;
+    padding: 0px 10px 0px 10px;
+}
 .panel {
     padding: 10px;
 }
@@ -368,3 +386,62 @@ a.code:active {
     vertical-align:middle;
     margin-right: 4px;
 }
+
+
+.popinInfo {
+    width: 600px;
+    /* height: 400px; */
+    background-color: #1a0024;
+    color: white;
+    display: none;
+    z-index: 1000;
+    /* center vertically and horizontally */
+    margin: auto;
+    padding: 10px;
+}
+
+.closePopin {
+    background-color: #eb3678;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    float: right;
+}
+
+.popinInfo-content {
+    font-size: 14px;
+    color: #e0e0e0; /* Light text color */
+    font-family: Arial, sans-serif;
+    
+}
+
+a:link, a:visited {color: #36eba9;}
+a:hover {color: #eb3678;}
+
+.popinInfo-title {
+    font-size: 16px;
+    color: #eb3678;
+    font-weight: bold;
+}
+
+.code {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.backToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #1a0024;
+    color: #eb3678;
+    font-size: 40px;
+    transform: rotate(-90deg);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    display: none;
+    
+    font-family: 'Courier New', Courier, monospace;
+}
+

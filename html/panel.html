@@ -11,6 +11,11 @@
 
         <br>
         <div class="divHeader">
+            <div id="divTopMenu" class="divTopMenu">
+                <div class="menuItem" id="menuNews">📰 What's new?</div>
+                <div class="menuItem"  id="menuBugs" style="margin-left: 20px!important;">🪲 Known bugs</div>
+                <div class="menuItem"  id="menuHelp" style="float:right;">🛟 How to write rules?</div>
+            </div>
             <input type="hidden" id="activatedButtons" class="filterInput">
             <input type="hidden" id="filterHidden" class="filterInput">
             <input type="text" id="filterInput" class="filterInput" placeholder="Enter keywords separated by AND, OR, NOT. You can use parentheses.">
@@ -111,6 +116,53 @@
             <div id="requestDetails"></div>
         </div>
     </div>
-    <script src="../js/panel.js"></script>
+    <div id="popinNews" class="popinInfo">
+        <div class="popinInfo-content">
+            <button id="closePopinNews" class="closePopin">X</button><span class="titleGreen">&nbsp;What's new?&nbsp;</span><br><br><br>
+            <div id="newsContent">
+                <p><span class="popinInfo-title">2025-03-16: Version 1.2 release.</span><br>
+                    New features:                
+                    <ul>
+                        <li>New way to write rules using logic operators (AND, OR, NOT). See "How to write rules for nore info.</li>
+                        <li>New way to handle predifined filters: they are now activated like switches and stored in an hidden area</li>
+                        <li>Added tiny labels for each predifined filter to keep tracking of the activated ones once the filters panel is closed</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="popinBugs" class="popinInfo">
+        <div class="popinInfo-content">
+            <button id="closePopinBugs" class="closePopin">X</button><span class="titleGreen">&nbsp;Know bugs?&nbsp;</span><br><br><br>
+            <div id="bugsContent">    
+                <ul>
+                    <li>Sometimes clicking on a request does nothing (often the first or last line)</li>
+                    <li>When loading a new page, sone request are duplicated on the previous page</li>
+                </ul>
+                If you experience any other issue, feel free to report it in the Github issue section > <a href="https://github.com/SamLeBarbu/network-auditor/issues" target="_blank">Github project issue section</a>
+            </div>
+        </div>
+    </div>
+    <div id="popinHelp" class="popinInfo">
+        <div class="popinInfo-content">
+            <button id="closePopinHelp" class="closePopin">X</button><span class="titleGreen">&nbsp;How to write rules?&nbsp;</span><br><br><br>
+            <div id="howToContent">To filter the requests, you can use predifined filters or write your own rules using logic operators (AND, OR, NOT).<br>
+                <br>
+                <span class="subTitle">Logic operators:</span><br>
+                <ul>
+                    <li><strong>AND</strong>: use it to combine two or more keywords. Example: <span class="code">google AND gtm.js</span></li>
+                    <li><strong>OR</strong>: use it to combine two or more keywords. Example: <span class="code">google-analytics.com OR gtm.js</span></li>
+                    <li><strong>NOT</strong>: use it to exclude a keyword. Remember to combine it with AND or OR. Example: <span class="code">google-analytics.com AND NOT gtm.js</span></li>
+                </ul>
+                <span class="subTitle">Parentheses:</span><br>
+                Use parentheses to group keywords. Example: <span class="code">(google-analytics.com OR gtm.js) AND NOT (aw- OR dc-)</span>
+                </div>
+        </div>
+    </div>
+
+    <!-- Add a static arrow at the buttom right to go back to the top of the page -->
+    <div class="backToTop" id="backToTop">></div>
+    <script src="../js/panel.min.js"></script>
+    <script src="../js/pre_ppms.js"></script>
 </body>
 </html>

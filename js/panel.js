@@ -30,6 +30,17 @@ const kameleoonButton = document.getElementById("kameleoonButton");
 const abtastyButton = document.getElementById("abtastyButton");
 const bingButton = document.getElementById("bingButton");
 
+const popinNews = document.getElementById("popinNews");
+const closePopinNews = document.getElementById("closePopinNews");
+const menuNews = document.getElementById("menuNews");
+const popinBugs = document.getElementById("popinBugs");
+const closePopinBugs = document.getElementById("closePopinBugs");
+const menuBugs = document.getElementById("menuBugs");
+const menuHelp = document.getElementById("menuHelp");
+const closePopinHelp = document.getElementById("closePopinHelp");
+const popinHelp = document.getElementById("popinHelp");
+const backToTop = document.getElementById("backToTop");
+
 let favicon;
 
 let networkRequests = [];
@@ -69,6 +80,8 @@ showFilters.addEventListener("click", () => {
     showFilters.innerText = "Show predefined filters";
     document.getElementById("divFilters").attributes["data-status"].value =
       "hidden";
+
+    _paq.push(["trackEvent", "Hide filters", "click"]);
     // Wait for the animation to finish
     setTimeout(() => {
       document.getElementById("divFilters").style.display = "none";
@@ -82,6 +95,7 @@ showFilters.addEventListener("click", () => {
     overlay.style.display = "none";
     document.getElementById("divFilters").attributes["data-status"].value =
       "show";
+    _paq.push(["trackEvent", "Show filters", "click"]);
   }
 });
 
@@ -105,26 +119,17 @@ clearFilters.addEventListener("click", () => {
   chrome.storage.sync.set({ filterHiddenValue: "" });
   chrome.storage.sync.set({ activatedButtonsValue: "" });
 
-  //   //    Change display of buttons with class tinyButton to none
-  //   const tinyButtons = document.getElementsByClassName("tinyButton");
-  //   for (let i = 0; i < tinyButtons.length; i++) {
-  //     tinyButtons[i].style.display = "none";
-  //   }
-
-  //   // Change all the button with class normalButtonGreen to normalButton
-  //   const normalButtonsGreen =
-  //     document.getElementsByClassName("normalButtonGreen");
-  //   for (let i = 0; i < normalButtonsGreen.length; i++) {
-  //     normalButtonsGreen[i].style.backgroundColor = "red";
-  //   }
-
   updateRequestList();
+
+  _paq.push(["trackEvent", "Clear filters", "click"]);
 });
 
 clearRequestsButton.addEventListener("click", () => {
   networkRequests = [];
   pageUrls = [];
   updateRequestList();
+
+  _paq.push(["trackEvent", "Clear requests", "click"]);
 });
 
 closeOverlayButton.addEventListener("click", () => {
@@ -185,8 +190,10 @@ buttons.forEach((buttonId) => {
   button.addEventListener("click", () => {
     if (button.className === "normalButton") {
       activateButton(buttonId, button.attributes["data-syntax"].value);
+      _paq.push(["trackEvent", buttonId, "click - ON"]);
     } else {
       deactivateButton(buttonId, button.attributes["data-syntax"].value);
+      _paq.push(["trackEvent", buttonId, "click - OFF"]);
     }
   });
 });
@@ -286,6 +293,19 @@ function addRequestToTable(request) {
     request.request.url.includes("bat.bing.net/actionp")
   ) {
     favicon = "bing";
+  } else if (
+    request.request.url.includes("/g/collect") ||
+    request.request.url.includes("googletagmanager.com/gtag/js?id=G-")
+  ) {
+    favicon = "ga4";
+  } else if (request.request.url.includes("google.com/ccm/collect")) {
+    favicon = "google";
+  } else if (
+    request.request.url.includes("doubleclick.net") ||
+    request.request.url.includes("googletagmanager.com/gtag/js?id=AW-") ||
+    request.request.url.includes("googletagmanager.com/gtag/js?id=DC-")
+  ) {
+    favicon = "googleads";
   } else {
   }
   // const initiatorType = request.initiator && request.initiator.url ? request.initiator.url : (request.initiator && request.initiator.type ? request.initiator.type : 'N/A');
@@ -302,7 +322,10 @@ function addRequestToTable(request) {
     favicon == "clarity" ||
     favicon == "kameleoon" ||
     favicon == "abtasty" ||
-    favicon == "bing"
+    favicon == "bing" ||
+    favicon == "ga4" ||
+    favicon == "google" ||
+    favicon == "googleads"
   ) {
     favicon = `<img src="../favicons/favicon_${favicon}.png" alt="favicon" class="favicon">`;
   } else {
@@ -558,5 +581,51 @@ function evaluate(ast, line) {
 
     default:
       throw new Error("Unknown AST node type: " + ast.type);
+  }
+}
+
+// Cature the clicks on popinNews
+
+menuNews.addEventListener("click", () => {
+  popinNews.style.display = "block";
+  _paq.push(["trackEvent", "What's new", "click", "Menu"]);
+});
+
+menuBugs.addEventListener("click", () => {
+  popinBugs.style.display = "block";
+  _paq.push(["trackEvent", "Know bugs", "click", "Menu"]);
+});
+
+menuHelp.addEventListener("click", () => {
+  popinHelp.style.display = "block";
+  _paq.push(["trackEvent", "Help", "click", "Menu"]);
+});
+
+closePopinNews.addEventListener("click", () => {
+  popinNews.style.display = "none";
+});
+
+closePopinBugs.addEventListener("click", () => {
+  popinBugs.style.display = "none";
+});
+
+closePopinHelp.addEventListener("click", () => {
+  popinHelp.style.display = "none";
+});
+
+backToTop.addEventListener("click", () => {
+  window.scrollTo(0, 0);
+});
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function () {
+  scrollFunction();
+};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    backToTop.style.display = "block";
+  } else {
+    backToTop.style.display = "none";
   }
 }
