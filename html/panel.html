@@ -34,12 +34,12 @@
             <button id="tarteAuCitronButton" class="normalButton" disabled>Tarte Au Citron</button><br><br>
 
             <span class="subTitle">Tag Managers: </span><br>
-            <button id="gtmClientSideButton" class="normalButton" data-syntax="(www.googletagmanager.com AND NOT (aw- OR dc-))">GTM client-side</button>
+            <button id="gtmClientSideButton" class="normalButton" data-syntax="(www.googletagmanager.com/gtm.js AND NOT (aw- OR dc-))">GTM client-side</button>
             <button id="gtmServerSideButton" class="normalButton" data-syntax="(gtm.js AND NOT www.googletagmanager.com)">GTM server-side</button>
             <button id="tagCoButton" class="normalButton" data-syntax="cdn.tagcommander.com">Tag Commander</button><br><br>
 
             <span class="subTitle">Web Analytics: </span><br>
-            <button id="ga4ClientSideButton" class="normalButton" data-syntax="google-analytics.com/g/collect">GA4 client-side</button>
+            <button id="ga4ClientSideButton" class="normalButton" data-syntax="(google-analytics.com/g/collect OR googletagmanager.com/gtag/js?id=G-)">GA4 client-side</button>
             <button id="ga4ServerSideButton" class="normalButton" data-syntax="(/g/collect AND NOT google-analytics.com)">GA4 server-side</button>
             <button id="atinternetButton" class="normalButton" data-syntax="xiti.com/hit.xiti">AT Internet</button>
             <button id="pianoButton" class="normalButton" data-syntax="xiti.com/event">Piano Analytics</button>
@@ -58,7 +58,7 @@
             <span class="subTitle">Advertising: </span><br>
             <button id="googleTagButton" class="normalButton" data-syntax="google.com/ccm/collect">Google Tag</button>
             <button id="googleAdsButton" class="normalButton" data-syntax="googletagmanager.com/gtag/js?id=AW-">Google Ads</button>
-            <button id="googleDCButton" class="normalButton" data-syntax="(googletagmanager.com/gtag/js?id=AW- OR g.doubleclick.net/)">Google DoubleClick</button>
+            <button id="googleDCButton" class="normalButton" data-syntax="(googletagmanager.com/gtag/js?id=DC- OR g.doubleclick.net/)">Google DoubleClick</button>
             <button id="bingButton" class="normalButton" data-syntax="(bat.bing.com/action OR bat.bing.com/p/action OR bat.bing.net/actionp)">Bing</button>
             <button id="facebookButton" class="normalButton" disabled>Facebook</button>
             <button id="twitterButton" class="normalButton" disabled>Twitter / X</button>
