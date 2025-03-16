@@ -16,6 +16,16 @@ body {
     color: #e0e0e0; /* Light text color */
 }
 
+.divHeader {
+    position: relative;
+    z-index: 100 ;
+    background-color: #280137;
+    /* border: 1px solid red; Dark border */
+    padding: 25px 0px 10px 0px;
+    margin: 0px;
+    margin-top: -25px;
+}
+
 .panel {
     padding: 10px;
 }
@@ -26,13 +36,14 @@ h1 {
 }
 
 .filterInput {
-    width: calc(100% - 120px);
+    width: calc(100% - 20px);
     padding: 8px;
     border: 1px solid #444444; /* Dark border */
     border-radius: 4px;
     background-color: #333333; /* Dark input background */
     color: #e0e0e0; /* Light text color */
     display: inline-block;
+    z-index: 100;
 }
 
 .tinyButtonsDiv {
@@ -82,6 +93,10 @@ h1 {
     font-size: 14px;
 }
 
+#showFilters {
+    min-width: 180px;
+}
+
 .normalButtonGreen {
 
     
@@ -124,6 +139,7 @@ h1 {
 
 .divFilters {
     display: none;
+    z-index: 1;
 
 }
 
@@ -132,6 +148,8 @@ h1 {
     animation-name: slide-in;
     background-color: #1a0024;
     padding: 10px;
+    z-index: 1;
+
 
 }
 
@@ -141,13 +159,14 @@ h1 {
     background-color: #1a0024;
     padding: 10px;
 
+
 }
 
 
 
 @keyframes slide-in {
     from {
-        translate: -150vw 0;
+        translate: 0 -500px;
         scale: 100% 1;
     }
 
@@ -165,12 +184,11 @@ h1 {
     }
 
     to {
-        translate: -150vw 0;
+        translate: 0 -500px;
         scale: 100% 1;
         display: none;
     }
 }
-
 
 .titleGreen {
     font-weight: bold;
@@ -193,7 +211,7 @@ h1 {
 .requestTable {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     table-layout: fixed;
 }
 
