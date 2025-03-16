@@ -29,32 +29,32 @@
             <button id="tarteAuCitronButton" class="normalButton" disabled>Tarte Au Citron</button><br><br>
 
             <span class="subTitle">Tag Managers: </span><br>
-            <button id="gtmClientSideButton" class="normalButton" data-syntax="www.googletagmanager.com AND NOT (aw- OR dc-)">GTM client-side</button>
-            <button id="gtmServerSideButton" class="normalButton" data-syntax="gtm.js ANF NOT www.googletagmanager.com">GTM server-side</button>
+            <button id="gtmClientSideButton" class="normalButton" data-syntax="(www.googletagmanager.com AND NOT (aw- OR dc-))">GTM client-side</button>
+            <button id="gtmServerSideButton" class="normalButton" data-syntax="(gtm.js AND NOT www.googletagmanager.com)">GTM server-side</button>
             <button id="tagCoButton" class="normalButton" data-syntax="cdn.tagcommander.com">Tag Commander</button><br><br>
 
             <span class="subTitle">Web Analytics: </span><br>
             <button id="ga4ClientSideButton" class="normalButton" data-syntax="google-analytics.com/g/collect">GA4 client-side</button>
-            <button id="ga4ServerSideButton" class="normalButton" data-syntax="/g/collect AND NOT google-analytics.com">GA4 server-side</button>
+            <button id="ga4ServerSideButton" class="normalButton" data-syntax="(/g/collect AND NOT google-analytics.com)">GA4 server-side</button>
             <button id="atinternetButton" class="normalButton" data-syntax="xiti.com/hit.xiti">AT Internet</button>
             <button id="pianoButton" class="normalButton" data-syntax="xiti.com/event">Piano Analytics</button>
             <button id="piwikButton" class="normalButton" data-syntax="ppms.php">Piwik</button>
             <button id="matomoButton" class="normalButton" disabled>Matomo</button><br><br>
 
             <span class="subTitle">UX: </span><br>
-            <button id="csButton" class="normalButton" data-syntax="contentsquare.net/uxa OR contentsquare.net/pageview OR contentsquare.net/v2">Contentsquare</button>
+            <button id="csButton" class="normalButton" data-syntax="(contentsquare.net/uxa OR contentsquare.net/pageview OR contentsquare.net/v2)">Contentsquare</button>
             <button id="clarityButton" class="normalButton" data-syntax="n.clarity.ms/collect">Clarity</button>
             <button id="hotjarButton" class="normalButton" disabled>Hotjar</button><br><br>
 
             <span class="subTitle">A/B testing: </span><br>
             <button id="kameleoonButton" class="normalButton" data-syntax="data.kameleoon.eu">Kameleoon</button>
-            <button id="abtastyButton" class="normalButton" data-syntax="try.abtasty.com OR ariane.abtasty.com">AB Tasty</button><br><br>
+            <button id="abtastyButton" class="normalButton" data-syntax="(try.abtasty.com OR ariane.abtasty.com)">AB Tasty</button><br><br>
 
             <span class="subTitle">Advertising: </span><br>
             <button id="googleTagButton" class="normalButton" data-syntax="google.com/ccm/collect">Google Tag</button>
             <button id="googleAdsButton" class="normalButton" data-syntax="googletagmanager.com/gtag/js?id=AW-">Google Ads</button>
-            <button id="googleDCButton" class="normalButton" data-syntax="googletagmanager.com/gtag/js?id=AW- OR g.doubleclick.net/">Google DoubleClick</button>
-            <button id="bingButton" class="normalButton" data-syntax="bat.bing.com/action OR bat.bing.com/p/action OR bat.bing.net/actionp">Bing</button>
+            <button id="googleDCButton" class="normalButton" data-syntax="(googletagmanager.com/gtag/js?id=AW- OR g.doubleclick.net/)">Google DoubleClick</button>
+            <button id="bingButton" class="normalButton" data-syntax="(bat.bing.com/action OR bat.bing.com/p/action OR bat.bing.net/actionp)">Bing</button>
             <button id="facebookButton" class="normalButton" disabled>Facebook</button>
             <button id="twitterButton" class="normalButton" disabled>Twitter / X</button>
             <button id="pinterestButton" class="normalButton" disabled>Pinterest</button>
@@ -86,6 +86,7 @@
             <button id="tiny_abtastyButton" class="tinyButton">AB Tasty</button>
             <button id="tiny_googleTagButton" class="tinyButton">G tag</button>
             <button id="tiny_googleAdsButton" class="tinyButton">G Ads</button>
+            <button id="tiny_googleDCButton" class="tinyButton">G DC</button>
             <button id="tiny_bingButton" class="tinyButton">Bing</button>
             <button id="tiny_facebookButton" class="tinyButton">Facebook</button>
             <button id="tiny_twitterButton" class="tinyButton">X</button>
