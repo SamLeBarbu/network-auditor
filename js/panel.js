@@ -41,7 +41,8 @@ const closePopinHelp = document.getElementById("closePopinHelp");
 const popinHelp = document.getElementById("popinHelp");
 const backToTop = document.getElementById("backToTop");
 
-let favicon;
+let toolFavicon;
+let requestType;
 
 let networkRequests = [];
 let pageUrls = [];
@@ -81,7 +82,7 @@ showFilters.addEventListener("click", () => {
     document.getElementById("divFilters").attributes["data-status"].value =
       "hidden";
 
-    _paq.push(["trackEvent", "Hide filters", "click"]);
+    _paq.push(["trackEvent", "Actions", "Hide filters"]);
     // Wait for the animation to finish
     setTimeout(() => {
       document.getElementById("divFilters").style.display = "none";
@@ -95,7 +96,7 @@ showFilters.addEventListener("click", () => {
     overlay.style.display = "none";
     document.getElementById("divFilters").attributes["data-status"].value =
       "show";
-    _paq.push(["trackEvent", "Show filters", "click"]);
+    _paq.push(["trackEvent", "Actions", "Show filters"]);
   }
 });
 
@@ -121,7 +122,7 @@ clearFilters.addEventListener("click", () => {
 
   updateRequestList();
 
-  _paq.push(["trackEvent", "Clear filters", "click"]);
+  _paq.push(["trackEvent", "Actions", "Clear filters"]);
 });
 
 clearRequestsButton.addEventListener("click", () => {
@@ -129,7 +130,7 @@ clearRequestsButton.addEventListener("click", () => {
   pageUrls = [];
   updateRequestList();
 
-  _paq.push(["trackEvent", "Clear requests", "click"]);
+  _paq.push(["trackEvent", "Actions", "Clear requests"]);
 });
 
 closeOverlayButton.addEventListener("click", () => {
@@ -190,10 +191,10 @@ buttons.forEach((buttonId) => {
   button.addEventListener("click", () => {
     if (button.className === "normalButton") {
       activateButton(buttonId, button.attributes["data-syntax"].value);
-      _paq.push(["trackEvent", buttonId, "click - ON"]);
+      _paq.push(["trackEvent", "Filters", buttonId, "ON"]);
     } else {
       deactivateButton(buttonId, button.attributes["data-syntax"].value);
-      _paq.push(["trackEvent", buttonId, "click - OFF"]);
+      _paq.push(["trackEvent", "Filters", buttonId, "OFF"]);
     }
   });
 });
@@ -262,78 +263,86 @@ function addRequestToTable(request) {
   }
 
   if (request.request.url.includes("gtm.js")) {
-    favicon = "gtm";
+    toolFavicon = "gtm";
   } else if (
     request.request.url.includes("cdn.tagcommander.com") ||
     request.request.url.includes("cdn.trustcommander.net")
   ) {
-    favicon = "commandersact";
+    toolFavicon = "commandersact";
   } else if (request.request.url.includes("xiti.com/event")) {
-    favicon = "piano";
+    toolFavicon = "piano";
   } else if (request.request.url.includes("xiti.com/hit.xiti")) {
-    favicon = "atinternet";
+    toolFavicon = "atinternet";
   } else if (
     request.request.url.includes("contentsquare.net/uxa") ||
     request.request.url.includes("contentsquare.net/v2") ||
     request.request.url.includes("contentsquare.net/pageview")
   ) {
-    favicon = "contentsquare";
+    toolFavicon = "contentsquare";
   } else if (request.request.url.includes("n.clarity.ms/collect")) {
-    favicon = "clarity";
+    toolFavicon = "clarity";
   } else if (request.request.url.includes("data.kameleoon.eu")) {
-    favicon = "kameleoon";
+    toolFavicon = "kameleoon";
   } else if (
     request.request.url.includes("try.abtasty.com") ||
     request.request.url.includes("ariane.abtasty.com")
   ) {
-    favicon = "abtasty";
+    toolFavicon = "abtasty";
   } else if (
     request.request.url.includes("bat.bing.com/action") ||
     request.request.url.includes("bat.bing.com/p/action") ||
     request.request.url.includes("bat.bing.net/actionp")
   ) {
-    favicon = "bing";
+    toolFavicon = "bing";
   } else if (
     request.request.url.includes("/g/collect") ||
     request.request.url.includes("googletagmanager.com/gtag/js?id=G-")
   ) {
-    favicon = "ga4";
+    toolFavicon = "ga4";
   } else if (request.request.url.includes("google.com/ccm/collect")) {
-    favicon = "google";
+    toolFavicon = "google";
   } else if (
     request.request.url.includes("doubleclick.net") ||
     request.request.url.includes("googletagmanager.com/gtag/js?id=AW-") ||
     request.request.url.includes("googletagmanager.com/gtag/js?id=DC-")
   ) {
-    favicon = "googleads";
+    toolFavicon = "googleads";
   } else {
   }
   // const initiatorType = request.initiator && request.initiator.url ? request.initiator.url : (request.initiator && request.initiator.type ? request.initiator.type : 'N/A');
   // const size = request.response.bodySize > 0 ? (request.response.bodySize / 1024).toFixed(2) + ' KB' : (request.response.contentLength ? (request.response.contentLength / 1024).toFixed(2) + ' KB' : 'N/A');
   const fileType = request.response.content.mimeType.split("/")[1];
   const listItem = document.createElement("tr");
-  // Check if favicon = gtm
+  // Check if toolFavicon = gtm
   if (
-    favicon == "gtm" ||
-    favicon == "commandersact" ||
-    favicon == "piano" ||
-    favicon == "atinternet" ||
-    favicon == "contentsquare" ||
-    favicon == "clarity" ||
-    favicon == "kameleoon" ||
-    favicon == "abtasty" ||
-    favicon == "bing" ||
-    favicon == "ga4" ||
-    favicon == "google" ||
-    favicon == "googleads"
+    toolFavicon == "gtm" ||
+    toolFavicon == "commandersact" ||
+    toolFavicon == "piano" ||
+    toolFavicon == "atinternet" ||
+    toolFavicon == "contentsquare" ||
+    toolFavicon == "clarity" ||
+    toolFavicon == "kameleoon" ||
+    toolFavicon == "abtasty" ||
+    toolFavicon == "bing" ||
+    toolFavicon == "ga4" ||
+    toolFavicon == "google" ||
+    toolFavicon == "googleads"
   ) {
-    favicon = `<img src="../favicons/favicon_${favicon}.png" alt="favicon" class="favicon">`;
+    toolFavicon = `<img src="../favicons/favicon_${toolFavicon}.png" alt="favicon" class="favicon">`;
+    if (
+      request.request.url.includes(".js") ||
+      request.request.url.includes("/js")
+    ) {
+      toolFavicon += ` <img src="../favicons/js_green.png" alt="js" class="favicon"> `;
+    } else {
+      toolFavicon += ` <img src="../favicons/send_pink.png" alt="js" class="favicon"> `;
+    }
   } else {
-    favicon = "";
+    toolFavicon = "";
   }
   listItem.className = "request-item";
   listItem.innerHTML = `
-        <td title="${request.request.url}">${favicon}/${urlToDisplay}</td>
+        <td title="${request.request.url}">${toolFavicon}/${urlToDisplay}</td>
         <td>${request.response.status}</td>
         <td>${request.request.method}</td>
         <td>${fileType}</td>
@@ -369,7 +378,6 @@ function showRequestDetails(request) {
   request.getContent((body) => {
     let details;
     let urlRequest = request.request.url;
-    console.log("isPreview", isPreview);
 
     if (urlRequest.includes("%")) {
       urlRequest = decodeURIComponent(urlRequest);
@@ -432,7 +440,6 @@ chrome.storage.sync.get(
   "activatedButtonsValue",
   ({ activatedButtonsValue }) => {
     if (activatedButtonsValue) {
-      console.log("activatedButtonsValue", activatedButtonsValue);
       activatedButtons.value = activatedButtonsValue;
       const activatedButtonsArray = activatedButtonsValue.split("|");
       activatedButtonsArray.forEach((button) => {
@@ -440,7 +447,6 @@ chrome.storage.sync.get(
         document.getElementById("tiny_" + button).style.display = "inline";
       });
     } else {
-      console.log("activatedButtonsValue", activatedButtonsValue);
     }
   }
 );
@@ -588,17 +594,17 @@ function evaluate(ast, line) {
 
 menuNews.addEventListener("click", () => {
   popinNews.style.display = "block";
-  _paq.push(["trackEvent", "What's new", "click", "Menu"]);
+  _paq.push(["trackEvent", "Menu", "What's new"]);
 });
 
 menuBugs.addEventListener("click", () => {
   popinBugs.style.display = "block";
-  _paq.push(["trackEvent", "Know bugs", "click", "Menu"]);
+  _paq.push(["trackEvent", "Menu", "Bugs"]);
 });
 
 menuHelp.addEventListener("click", () => {
   popinHelp.style.display = "block";
-  _paq.push(["trackEvent", "Help", "click", "Menu"]);
+  _paq.push(["trackEvent", "Menu", "Help"]);
 });
 
 closePopinNews.addEventListener("click", () => {
@@ -615,6 +621,7 @@ closePopinHelp.addEventListener("click", () => {
 
 backToTop.addEventListener("click", () => {
   window.scrollTo(0, 0);
+  _paq.push(["trackEvent", "Actions", "Back to top"]);
 });
 
 // When the user scrolls down 20px from the top of the document, show the button

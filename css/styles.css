@@ -433,15 +433,24 @@ a:hover {color: #eb3678;}
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #1a0024;
+    background-color: rgba(26, 0, 36, 0.7);
     color: #eb3678;
-    font-size: 40px;
-    transform: rotate(-90deg);
     border: none;
     padding: 10px;
     cursor: pointer;
     display: none;
     
     font-family: 'Courier New', Courier, monospace;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.backToTopArrow {
+    font-size: 40px;
+    transform: rotate(-90deg);
+    font-weight: bold;
+    margin-top: -25px;
+    display: block;
+    
 }
 
