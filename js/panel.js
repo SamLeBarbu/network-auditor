@@ -309,13 +309,26 @@ function addRequestToTable(request) {
     toolFavicon = "gtm";
   } else if (
     request.request.url.includes("cdn.tagcommander.com") ||
-    request.request.url.includes("cdn.trustcommander.net")
+    request.request.url.includes("cdn.trustcommander.net") ||
+    (request.request.url.includes("privacy_v") &&
+      request.request.url.includes(".js")) ||
+    (request.request.url.includes("tc_") && request.request.url.includes(".js"))
   ) {
     toolFavicon = "commandersact";
   } else if (request.request.url.includes("xiti.com/event")) {
     toolFavicon = "piano";
   } else if (request.request.url.includes("xiti.com/hit.xiti")) {
     toolFavicon = "atinternet";
+  } else if (
+    request.request.url.includes("ppms.js") ||
+    request.request.url.includes("ppms.php")
+  ) {
+    toolFavicon = "piwik";
+  } else if (
+    request.request.url.includes("matomo.js") ||
+    request.request.url.includes("matomo.php")
+  ) {
+    toolFavicon = "matomo";
   } else if (
     request.request.url.includes("contentsquare.net/uxa") ||
     request.request.url.includes("contentsquare.net/v2") ||
@@ -362,6 +375,8 @@ function addRequestToTable(request) {
     toolFavicon == "commandersact" ||
     toolFavicon == "piano" ||
     toolFavicon == "atinternet" ||
+    toolFavicon == "piwik" ||
+    toolFavicon == "matomo" ||
     toolFavicon == "contentsquare" ||
     toolFavicon == "clarity" ||
     toolFavicon == "kameleoon" ||
