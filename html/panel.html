@@ -21,11 +21,12 @@
             <input type="text" id="filterInput" class="filterInput" placeholder="Enter keywords separated by AND, OR, NOT. You can use parentheses.">
             
             <br><br>
-            <button id="showFilters" class="buttonGreen">Show predefined filters</button>
+            <button id="showPredifinedFilters" class="buttonGreen">Show predefined filters</button>
+            <button id="showCustomFilters" class="buttonGreen">Show custom filters</button>
             <button id="clearRequests">Clear requests</button><br></div>
         
 
-        <div id="divFilters" class="divFilters" data-status="hidden">
+        <div id="divPredefinedFilters" class="divPredefinedFilters" data-status="hidden">
             <span class="subTitle">Consent Managers: </span><br>
             <button id="oneTrustButton" class="normalButton" data-syntax="cdn.cookielaw.org/scripttemplates">OneTrust</button>
             <button id="trustCoButton" class="normalButton" data-syntax="cdn.trustcommander.net/privacy">Trust Commander</button>
@@ -69,6 +70,44 @@
             
             <button id="clearFilters">Clear filters</button>
         </div>
+        <div id="divCustomFilters" class="divCustomFilters" data-status="hidden">
+            <span class="subTitle">Custom filters: </span><br><br>
+            <input type="text" id="customFilterInput1" class="customfilterInput" placeholder="Enter keywords separated by AND, OR, NOT. You can use parentheses.">
+            <label class="switch">
+                <input id="customFilterswitch1" type="checkbox">
+                <span class="slider round"></span>
+              </label>
+                <span style="width: 50px; display: inline-block;"></span>
+              <input type="text" id="customFilterInput2" class="customfilterInput" placeholder="Enter keywords separated by AND, OR, NOT. You can use parentheses.">
+            <label class="switch">
+                <input id="customFilterswitch2" type="checkbox">
+                <span class="slider round"></span>
+              </label><br><br>
+              <input type="text" id="customFilterInput3" class="customfilterInput" placeholder="Enter keywords separated by AND, OR, NOT. You can use parentheses.">
+            <label class="switch">
+                <input id="customFilterswitch3" type="checkbox">
+                <span class="slider round"></span>
+              </label>
+              <span style="width: 50px; display: inline-block;"></span>
+              <input type="text" id="customFilterInput4" class="customfilterInput" placeholder="Enter keywords separated by AND, OR, NOT. You can use parentheses.">
+            <label class="switch">
+                <input id="customFilterswitch4" type="checkbox">
+                <span class="slider round"></span>
+              </label><br><br>
+              <input type="text" id="customFilterInput5" class="customfilterInput" placeholder="Enter keywords separated by AND, OR, NOT. You can use parentheses.">
+            <label class="switch">
+                <input id="customFilterswitch5" type="checkbox">
+                <span class="slider round"></span>
+              </label>
+              <span style="width: 50px; display: inline-block;"></span>
+              <input type="text" id="customFilterInput6" class="customfilterInput" placeholder="Enter keywords separated by AND, OR, NOT. You can use parentheses.">
+            <label class="switch">
+                <input id="customFilterswitch6" type="checkbox">
+                <span class="slider round"></span>
+              </label><br><br>
+
+
+            </div>
         <div id="tinyButtonsDiv" class="tinyButtonsDiv">
             <button id="tiny_oneTrustButton" class="tinyButton">OneTrust</button>
             <button id="tiny_trustCoButton" class="tinyButton">TrustCo</button>
@@ -97,6 +136,12 @@
             <button id="tiny_twitterButton" class="tinyButton">X</button>
             <button id="tiny_linkedinButton" class="tinyButton">LinkedIn</button>
             <button id="tiny_leboncoinButton" class="tinyButton">LBC</button>
+            <button id="tiny_customFilter1" class="tinyButton">Custom 1</button>
+            <button id="tiny_customFilter2" class="tinyButton">Custom 2</button>
+            <button id="tiny_customFilter3" class="tinyButton">Custom 3</button>
+            <button id="tiny_customFilter4" class="tinyButton">Custom 4</button>
+            <button id="tiny_customFilter5" class="tinyButton">Custom 5</button>
+            <button id="tiny_customFilter6" class="tinyButton">Custom 6</button>
         </div>
         <table id="requestTable" class="requestTable">
             <thead>

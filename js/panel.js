@@ -3,7 +3,10 @@ const filterHidden = document.getElementById("filterHidden");
 const activatedButtons = document.getElementById("activatedButtons");
 // const filterTypeSelect = document.getElementById("filterType");
 const requestList = document.getElementById("requestList");
-const showFilters = document.getElementById("showFilters");
+const showPredifinedFilters = document.getElementById("showPredifinedFilters");
+const showCustomFilters = document.getElementById("showCustomFilters");
+const divPredefinedFilters = document.getElementById("divPredefinedFilters");
+const divCustomFilters = document.getElementById("divCustomFilters");
 const clearFilters = document.getElementById("clearFilters");
 const clearRequestsButton = document.getElementById("clearRequests");
 const overlay = document.getElementById("overlay");
@@ -41,6 +44,20 @@ const closePopinHelp = document.getElementById("closePopinHelp");
 const popinHelp = document.getElementById("popinHelp");
 const backToTop = document.getElementById("backToTop");
 
+const customFilterswitch1 = document.getElementById("customFilterswitch1");
+const customFilterswitch2 = document.getElementById("customFilterswitch2");
+const customFilterswitch3 = document.getElementById("customFilterswitch3");
+const customFilterswitch4 = document.getElementById("customFilterswitch4");
+const customFilterswitch5 = document.getElementById("customFilterswitch5");
+const customFilterswitch6 = document.getElementById("customFilterswitch6");
+
+const customFilterInput1 = document.getElementById("customFilterInput1");
+const customFilterInput2 = document.getElementById("customFilterInput2");
+const customFilterInput3 = document.getElementById("customFilterInput3");
+const customFilterInput4 = document.getElementById("customFilterInput4");
+const customFilterInput5 = document.getElementById("customFilterInput5");
+const customFilterInput6 = document.getElementById("customFilterInput6");
+
 let toolFavicon;
 let requestType;
 
@@ -69,34 +86,55 @@ filterHidden.addEventListener("input", updateRequestList);
 //   applyNetworkFilters(filters);
 // });
 
-showFilters.addEventListener("click", () => {
-  // Check if divFilters data-status attributer is equals to show
-  if (
-    document.getElementById("divFilters").attributes["data-status"].value ===
-    "show"
-  ) {
-    document.getElementById("divFilters").className = "divFiltersOut";
-    showFilters.style.backgroundColor = "#36eba9";
-    showFilters.style.color = "#280137";
-    showFilters.innerText = "Show predefined filters";
-    document.getElementById("divFilters").attributes["data-status"].value =
-      "hidden";
+showPredifinedFilters.addEventListener("click", () => {
+  // Check if divPredefinedFilters data-status attributer is equals to show
+  if (divPredefinedFilters.attributes["data-status"].value === "show") {
+    divPredefinedFilters.className = "divPredefinedFiltersOut";
+    showPredifinedFilters.style.backgroundColor = "#36eba9";
+    showPredifinedFilters.style.color = "#280137";
+    showPredifinedFilters.innerText = "Show predefined filters";
+    divPredefinedFilters.attributes["data-status"].value = "hidden";
 
-    _paq.push(["trackEvent", "Actions", "Hide filters"]);
+    _paq.push(["trackEvent", "Actions", "Hide predifined filters"]);
     // Wait for the animation to finish
     setTimeout(() => {
-      document.getElementById("divFilters").style.display = "none";
+      divPredefinedFilters.style.display = "none";
     }, 400);
   } else {
-    document.getElementById("divFilters").className = "divFiltersIn";
-    document.getElementById("divFilters").style.display = "block";
-    showFilters.style.backgroundColor = "#eb3678";
-    showFilters.style.color = "white";
-    showFilters.innerText = "Hide predefined filters";
+    divPredefinedFilters.className = "divPredefinedFiltersIn";
+    divPredefinedFilters.style.display = "block";
+    showPredifinedFilters.style.backgroundColor = "#eb3678";
+    showPredifinedFilters.style.color = "white";
+    showPredifinedFilters.innerText = "Hide predefined filters";
     overlay.style.display = "none";
-    document.getElementById("divFilters").attributes["data-status"].value =
-      "show";
-    _paq.push(["trackEvent", "Actions", "Show filters"]);
+    divPredefinedFilters.attributes["data-status"].value = "show";
+    _paq.push(["trackEvent", "Actions", "Show predifined filters"]);
+  }
+});
+
+showCustomFilters.addEventListener("click", () => {
+  // Check if divPredefinedFilters data-status attributer is equals to show
+  if (divCustomFilters.attributes["data-status"].value === "show") {
+    divCustomFilters.className = "divCustomFiltersOut";
+    showCustomFilters.style.backgroundColor = "#36eba9";
+    showCustomFilters.style.color = "#280137";
+    showCustomFilters.innerText = "Show custom filters";
+    divCustomFilters.attributes["data-status"].value = "hidden";
+
+    _paq.push(["trackEvent", "Actions", "Hide custom filters"]);
+    // Wait for the animation to finish
+    setTimeout(() => {
+      divCustomFilters.style.display = "none";
+    }, 400);
+  } else {
+    divCustomFilters.className = "divCustomFiltersIn";
+    divCustomFilters.style.display = "block";
+    showCustomFilters.style.backgroundColor = "#eb3678";
+    showCustomFilters.style.color = "white";
+    showCustomFilters.innerText = "Hide custom filters";
+    overlay.style.display = "none";
+    divCustomFilters.attributes["data-status"].value = "show";
+    _paq.push(["trackEvent", "Actions", "Show custom filters"]);
   }
 });
 
@@ -147,7 +185,10 @@ function activateButton(buttonName, syntax) {
   updateRequestList();
   chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
   chrome.storage.sync.set({ activatedButtonsValue: activatedButtons.value });
-  document.getElementById(buttonName).className = "normalButtonGreen";
+  // if document.getElementById(buttonName) exists
+  if (document.getElementById(buttonName)) {
+    document.getElementById(buttonName).className = "normalButtonGreen";
+  }
   document.getElementById("tiny_" + buttonName).style.display = "inline";
 }
 
@@ -177,7 +218,9 @@ function deactivateButton(buttonName, syntax) {
 
   chrome.storage.sync.set({ filterHiddenValue: filterHidden.value });
   chrome.storage.sync.set({ activatedButtonsValue: activatedButtons.value });
-  document.getElementById(buttonName).className = "normalButton";
+  if (document.getElementById(buttonName)) {
+    document.getElementById(buttonName).className = "normalButton";
+  }
   document.getElementById("tiny_" + buttonName).style.display = "none";
 }
 
@@ -437,14 +480,125 @@ chrome.storage.sync.get("filterHiddenValue", ({ filterHiddenValue }) => {
 });
 
 chrome.storage.sync.get(
+  "customFilterInput1Value",
+  ({ customFilterInput1Value }) => {
+    if (customFilterInput1Value) {
+      customFilterInput1.value = customFilterInput1Value;
+    }
+  }
+);
+
+chrome.storage.sync.get(
+  "customFilterInput2Value",
+  ({ customFilterInput2Value }) => {
+    if (customFilterInput2Value) {
+      customFilterInput2.value = customFilterInput2Value;
+    }
+  }
+);
+
+chrome.storage.sync.get(
+  "customFilterInput3Value",
+  ({ customFilterInput3Value }) => {
+    if (customFilterInput3Value) {
+      customFilterInput3.value = customFilterInput3Value;
+    }
+  }
+);
+
+chrome.storage.sync.get(
+  "customFilterInput4Value",
+  ({ customFilterInput4Value }) => {
+    if (customFilterInput4Value) {
+      customFilterInput4.value = customFilterInput4Value;
+    }
+  }
+);
+
+chrome.storage.sync.get(
+  "customFilterInput5Value",
+  ({ customFilterInput5Value }) => {
+    if (customFilterInput5Value) {
+      customFilterInput5.value = customFilterInput5Value;
+    }
+  }
+);
+
+chrome.storage.sync.get(
+  "customFilterInput6Value",
+  ({ customFilterInput6Value }) => {
+    if (customFilterInput6Value) {
+      customFilterInput6.value = customFilterInput6Value;
+    }
+  }
+);
+
+chrome.storage.sync.get(
   "activatedButtonsValue",
   ({ activatedButtonsValue }) => {
     if (activatedButtonsValue) {
       activatedButtons.value = activatedButtonsValue;
       const activatedButtonsArray = activatedButtonsValue.split("|");
       activatedButtonsArray.forEach((button) => {
-        document.getElementById(button).className = "normalButtonGreen";
+        if (document.getElementById(button)) {
+          document.getElementById(button).className = "normalButtonGreen";
+        }
         document.getElementById("tiny_" + button).style.display = "inline";
+        if (button === "customFilter1") {
+          customFilterswitch1.checked = true;
+          customFilterInput1.disabled = true;
+          chrome.storage.sync.get(
+            "customFilterInput1Value",
+            ({ customFilterInput1Value }) => {
+              customFilterInput1.value = customFilterInput1Value;
+            }
+          );
+        } else if (button === "customFilter2") {
+          customFilterswitch2.checked = true;
+          customFilterInput2.disabled = true;
+          chrome.storage.sync.get(
+            "customFilterInput2Value",
+            ({ customFilterInput2Value }) => {
+              customFilterInput2.value = customFilterInput2Value;
+            }
+          );
+        } else if (button === "customFilter3") {
+          customFilterswitch3.checked = true;
+          customFilterInput3.disabled = true;
+          chrome.storage.sync.get(
+            "customFilterInput3Value",
+            ({ customFilterInput3Value }) => {
+              customFilterInput3.value = customFilterInput3Value;
+            }
+          );
+        } else if (button === "customFilter4") {
+          customFilterswitch4.checked = true;
+          customFilterInput4.disabled = true;
+          chrome.storage.sync.get(
+            "customFilterInput4Value",
+            ({ customFilterInput4Value }) => {
+              customFilterInput4.value = customFilterInput4Value;
+            }
+          );
+        } else if (button === "customFilter5") {
+          customFilterswitch5.checked = true;
+          customFilterInput5.disabled = true;
+          chrome.storage.sync.get(
+            "customFilterInput5Value",
+            ({ customFilterInput5Value }) => {
+              customFilterInput5.value = customFilterInput5Value;
+            }
+          );
+        } else if (button === "customFilter6") {
+          customFilterswitch6.checked = true;
+          customFilterInput6.disabled = true;
+          chrome.storage.sync.get(
+            "customFilterInput6Value",
+            ({ customFilterInput6Value }) => {
+              customFilterInput6.value = customFilterInput6Value;
+            }
+          );
+        }
       });
     } else {
     }
@@ -636,3 +790,124 @@ function scrollFunction() {
     backToTop.style.display = "none";
   }
 }
+
+// When the customFilterswitchX changes, update the customFilterswitchXValue
+customFilterswitch1.addEventListener("change", () => {
+  const customFilterswitch1Value = customFilterswitch1.checked;
+  chrome.storage.sync.set({ customFilterswitch1Value });
+  if (customFilterswitch1Value === true) {
+    // disable customFilterInput1
+    customFilterInput1.disabled = true;
+    const customFilterInput1Value = customFilterInput1.value;
+    chrome.storage.sync.set({ customFilterInput1Value });
+    activateButton("customFilter1", customFilterInput1Value);
+    _paq.push(["trackEvent", "Filters", "Custom filter 1", "ON"]);
+  } else {
+    // enable customFilterInput1
+    customFilterInput1.disabled = false;
+    const customFilterInput1Value = customFilterInput1.value;
+
+    deactivateButton("customFilter1", customFilterInput1Value);
+    _paq.push(["trackEvent", "Filters", "Custom filter 1", "OFF"]);
+  }
+});
+
+customFilterswitch2.addEventListener("change", () => {
+  const customFilterswitch2Value = customFilterswitch2.checked;
+  chrome.storage.sync.set({ customFilterswitch2Value });
+  if (customFilterswitch2Value === true) {
+    // disable customFilterInput2
+    customFilterInput2.disabled = true;
+    const customFilterInput2Value = customFilterInput2.value;
+    chrome.storage.sync.set({ customFilterInput2Value });
+    activateButton("customFilter2", customFilterInput2Value);
+    _paq.push(["trackEvent", "Filters", "Custom filter 2", "ON"]);
+  } else {
+    // enable customFilterInput2
+    customFilterInput2.disabled = false;
+    const customFilterInput2Value = customFilterInput2.value;
+
+    deactivateButton("customFilter2", customFilterInput2Value);
+    _paq.push(["trackEvent", "Filters", "Custom filter 2", "OFF"]);
+  }
+});
+
+customFilterswitch3.addEventListener("change", () => {
+  const customFilterswitch3Value = customFilterswitch3.checked;
+  chrome.storage.sync.set({ customFilterswitch3Value });
+  if (customFilterswitch3Value === true) {
+    // disable customFilterInput3
+    customFilterInput3.disabled = true;
+    const customFilterInput3Value = customFilterInput3.value;
+    chrome.storage.sync.set({ customFilterInput3Value });
+    activateButton("customFilter3", customFilterInput3Value);
+    _paq.push(["trackEvent", "Filters", "Custom filter 3", "ON"]);
+  } else {
+    // enable customFilterInput3
+    customFilterInput3.disabled = false;
+    const customFilterInput3Value = customFilterInput3.value;
+
+    deactivateButton("customFilter3", customFilterInput3Value);
+    _paq.push(["trackEvent", "Filters", "Custom filter 3", "OFF"]);
+  }
+});
+
+customFilterswitch4.addEventListener("change", () => {
+  const customFilterswitch4Value = customFilterswitch4.checked;
+  chrome.storage.sync.set({ customFilterswitch4Value });
+  if (customFilterswitch4Value === true) {
+    // disable customFilterInput4
+    customFilterInput4.disabled = true;
+    const customFilterInput4Value = customFilterInput4.value;
+    chrome.storage.sync.set({ customFilterInput4Value });
+    activateButton("customFilter4", customFilterInput4Value);
+    _paq.push(["trackEvent", "Filters", "Custom filter 4", "ON"]);
+  } else {
+    // enable customFilterInput4
+    customFilterInput4.disabled = false;
+    const customFilterInput4Value = customFilterInput4.value;
+
+    deactivateButton("customFilter4", customFilterInput4Value);
+    _paq.push(["trackEvent", "Filters", "Custom filter 4", "OFF"]);
+  }
+});
+
+customFilterswitch5.addEventListener("change", () => {
+  const customFilterswitch5Value = customFilterswitch5.checked;
+  chrome.storage.sync.set({ customFilterswitch5Value });
+  if (customFilterswitch5Value === true) {
+    // disable customFilterInput5
+    customFilterInput5.disabled = true;
+    const customFilterInput5Value = customFilterInput5.value;
+    chrome.storage.sync.set({ customFilterInput5Value });
+    activateButton("customFilter5", customFilterInput5Value);
+    _paq.push(["trackEvent", "Filters", "Custom filter 5", "ON"]);
+  } else {
+    // enable customFilterInput5
+    customFilterInput5.disabled = false;
+    const customFilterInput5Value = customFilterInput5.value;
+
+    deactivateButton("customFilter5", customFilterInput5Value);
+    _paq.push(["trackEvent", "Filters", "Custom filter 5", "OFF"]);
+  }
+});
+
+customFilterswitch6.addEventListener("change", () => {
+  const customFilterswitch6Value = customFilterswitch6.checked;
+  chrome.storage.sync.set({ customFilterswitch6Value });
+  if (customFilterswitch6Value === true) {
+    // disable customFilterInput6
+    customFilterInput6.disabled = true;
+    const customFilterInput6Value = customFilterInput6.value;
+    chrome.storage.sync.set({ customFilterInput6Value });
+    activateButton("customFilter6", customFilterInput6Value);
+    _paq.push(["trackEvent", "Filters", "Custom filter 6", "ON"]);
+  } else {
+    // enable customFilterInput6
+    customFilterInput6.disabled = false;
+    const customFilterInput6Value = customFilterInput6.value;
+
+    deactivateButton("customFilter6", customFilterInput6Value);
+    _paq.push(["trackEvent", "Filters", "Custom filter 6", "OFF"]);
+  }
+});
