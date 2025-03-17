@@ -266,7 +266,10 @@ function addRequestToTable(request) {
     toolFavicon = "gtm";
   } else if (
     request.request.url.includes("cdn.tagcommander.com") ||
-    request.request.url.includes("cdn.trustcommander.net")
+    request.request.url.includes("cdn.trustcommander.net") ||
+    (request.request.url.includes("privacy_v") &&
+      request.request.url.includes(".js")) ||
+    (request.request.url.includes("tc_") && request.request.url.includes(".js"))
   ) {
     toolFavicon = "commandersact";
   } else if (request.request.url.includes("xiti.com/event")) {

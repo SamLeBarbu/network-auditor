@@ -28,7 +28,7 @@
         <div id="divFilters" class="divFilters" data-status="hidden">
             <span class="subTitle">Consent Managers: </span><br>
             <button id="oneTrustButton" class="normalButton" data-syntax="cdn.cookielaw.org/scripttemplates">OneTrust</button>
-            <button id="trustCoButton" class="normalButton" data-syntax="cdn.trustcommander.net/privacy">Trust Commander</button>
+            <button id="trustCoButton" class="normalButton" data-syntax="(cdn.trustcommander.net/privacy OR (privacy_v AND .js))">Trust Commander</button>
             <button id="cookieBotButton" class="normalButton" disabled>Cookiebot</button>
             <button id="didomiButton" class="normalButton" disabled>Didomi</button>
             <button id="tarteAuCitronButton" class="normalButton" disabled>Tarte Au Citron</button><br><br>
@@ -36,11 +36,11 @@
             <span class="subTitle">Tag Managers: </span><br>
             <button id="gtmClientSideButton" class="normalButton" data-syntax="(www.googletagmanager.com/gtm.js AND NOT (aw- OR dc-))">GTM client-side</button>
             <button id="gtmServerSideButton" class="normalButton" data-syntax="(gtm.js AND NOT www.googletagmanager.com)">GTM server-side</button>
-            <button id="tagCoButton" class="normalButton" data-syntax="cdn.tagcommander.com">Tag Commander</button><br><br>
+            <button id="tagCoButton" class="normalButton" data-syntax="(cdn.tagcommander.com OR (tc_ AND .js))">Tag Commander</button><br><br>
 
             <span class="subTitle">Web Analytics: </span><br>
-            <button id="ga4ClientSideButton" class="normalButton" data-syntax="(google-analytics.com/g/collect OR googletagmanager.com/gtag/js?id=G-)">GA4 client-side</button>
-            <button id="ga4ServerSideButton" class="normalButton" data-syntax="(/g/collect AND NOT google-analytics.com)">GA4 server-side</button>
+            <button id="ga4ClientSideButton" class="normalButton" data-syntax="(google-analytics.com/g/collect OR googletagmanager.com/gtag/js?id=G- OR analytics.google.com)">GA4 client-side</button>
+            <button id="ga4ServerSideButton" class="normalButton" data-syntax="(/g/collect AND NOT (google-analytics.com OR analytics.google.com))">GA4 server-side</button>
             <button id="atinternetButton" class="normalButton" data-syntax="xiti.com/hit.xiti">AT Internet</button>
             <button id="pianoButton" class="normalButton" data-syntax="xiti.com/event">Piano Analytics</button>
             <button id="piwikButton" class="normalButton" data-syntax="ppms.php">Piwik</button>
