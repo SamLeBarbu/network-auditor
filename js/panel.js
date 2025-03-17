@@ -277,6 +277,16 @@ function addRequestToTable(request) {
   } else if (request.request.url.includes("xiti.com/hit.xiti")) {
     toolFavicon = "atinternet";
   } else if (
+    request.request.url.includes("ppms.js") ||
+    request.request.url.includes("ppms.php")
+  ) {
+    toolFavicon = "piwik";
+  } else if (
+    request.request.url.includes("matomo.js") ||
+    request.request.url.includes("matomo.php")
+  ) {
+    toolFavicon = "matomo";
+  } else if (
     request.request.url.includes("contentsquare.net/uxa") ||
     request.request.url.includes("contentsquare.net/v2") ||
     request.request.url.includes("contentsquare.net/pageview")
@@ -322,6 +332,8 @@ function addRequestToTable(request) {
     toolFavicon == "commandersact" ||
     toolFavicon == "piano" ||
     toolFavicon == "atinternet" ||
+    toolFavicon == "piwik" ||
+    toolFavicon == "matomo" ||
     toolFavicon == "contentsquare" ||
     toolFavicon == "clarity" ||
     toolFavicon == "kameleoon" ||
