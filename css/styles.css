@@ -66,7 +66,8 @@ h1 {
 }
 
 .customfilterInput {
-    width: calc(40% - 20px);
+    /* width: calc(40% - 20px); */
+    width:300px;
     padding: 8px;
     border: 1px solid #444444; /* Dark border */
     border-radius: 4px;
@@ -77,6 +78,23 @@ h1 {
 }
 
 .customfilterInput:disabled {
+    background-color: #36eba9;
+    color: #280137; 
+}
+
+.customfilterName {
+    /* width: calc(40% - 20px); */
+    width: 100px;
+    padding: 8px;
+    border: 1px solid #444444; /* Dark border */
+    border-radius: 4px;
+    background-color: #333333; /* Dark input background */
+    color: #e0e0e0; /* Light text color */
+    display: inline-block;
+    z-index: 100;
+}
+
+.customfilterName:disabled {
     background-color: #36eba9;
     color: #280137; 
 }

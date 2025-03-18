@@ -1,12 +1,4 @@
-let siteID = "32f0a224-0d51-46e9-a213-270c5f248baf";
-
-chrome.storage.sync.get("isSam", ({ isSam }) => {
-  if (isSam) {
-    siteID = "11111111-1111-1111-1111-111111111111";
-  } else {
-    siteID = "32f0a224-0d51-46e9-a213-270c5f248baf";
-  }
-});
+const siteID = "32f0a224-0d51-46e9-a213-270c5f248baf";
 
 var _paq = _paq || [];
 _paq.push(["trackPageView"]);
