@@ -348,6 +348,8 @@ function addRequestToTable(request) {
     request.request.url.includes("ariane.abtasty.com")
   ) {
     toolFavicon = "abtasty";
+  } else if (request.request.url.includes("cdn.dynamicyield.com")) {
+    toolFavicon = "dynamicyield";
   } else if (
     request.request.url.includes("bat.bing.com/action") ||
     request.request.url.includes("bat.bing.com/p/action") ||
@@ -385,6 +387,7 @@ function addRequestToTable(request) {
     toolFavicon == "clarity" ||
     toolFavicon == "kameleoon" ||
     toolFavicon == "abtasty" ||
+    toolFavicon == "dynamicyield" ||
     toolFavicon == "bing" ||
     toolFavicon == "ga4" ||
     toolFavicon == "google" ||
